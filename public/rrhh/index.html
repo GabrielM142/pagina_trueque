@@ -856,7 +856,7 @@
       $('r-per').textContent = 'Para más de 300 personas, 30 relojes o 15 sedes armamos un precio por volumen.';
       $('r-incl').innerHTML = '';
       $('r-iva').textContent = 'Te respondemos el mismo día hábil.';
-      cta.href = contactUrl(`Hola, necesito una cotización de Trueque HR para ${emp} empleados, ${clk} relojes y ${sit} sedes.`);
+      cta.href = contactUrl(`Hola, necesito una cotización de Trueque HR para ${emp} empleados, ${clk} ${clk === 1 ? 'reloj' : 'relojes'} y ${sit} ${sit === 1 ? 'sede' : 'sedes'}.`);
       return;
     }
     const yearTotal = plan.year;
@@ -876,7 +876,7 @@
       plan.full ? 'Empleados y contratos en Odoo' : plan.odoo ? 'Empleados en Odoo' : 'Soporte desde Ecuador',
     ].map((t) => `<li>${CHECK}${t}</li>`).join('');
     $('r-iva').textContent = `Más IVA 15 %: ${usd(shown * (1 + IVA), 2)} ${billing === 'year' ? 'al año' : 'al mes'} en total.`;
-    cta.href = contactUrl(`Hola, me interesa Trueque HR, plan ${plan.name} (${billing === 'year' ? 'anual' : 'mensual'}) para ${emp} empleados, ${clk} relojes y ${sit} ${sit === 1 ? 'sede' : 'sedes'}${wantsOdoo ? ', con Odoo' : ''}.`);
+    cta.href = contactUrl(`Hola, me interesa Trueque HR, plan ${plan.name} (${billing === 'year' ? 'anual' : 'mensual'}) para ${emp} empleados, ${clk} ${clk === 1 ? 'reloj' : 'relojes'} y ${sit} ${sit === 1 ? 'sede' : 'sedes'}${wantsOdoo ? ', con Odoo' : ''}.`);
     if (WHATSAPP) { cta.target = '_blank'; cta.rel = 'noopener'; }
   }
 
