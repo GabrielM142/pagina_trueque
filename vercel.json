@@ -3,6 +3,14 @@
   "outputDirectory": "dist/trueque-meta-site/browser",
   "rewrites": [
     {
+      "source": "/rrhh",
+      "destination": "/rrhh/index.html"
+    },
+    {
+      "source": "/rrhh/",
+      "destination": "/rrhh/index.html"
+    },
+    {
       "source": "/(.*)",
       "destination": "/index.html"
     }
