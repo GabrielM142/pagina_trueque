@@ -1,0 +1,995 @@
+<!doctype html>
+<html lang="es-EC">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Trueque HR · Control de asistencia para Ecuador</title>
+<meta name="description" content="Conecta tus relojes biométricos ZKTeco y ve atrasos, faltas, horas extra al 50 % y 100 % y vacaciones de toda tu empresa en un solo panel. Hecho en Ecuador.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Trueque HR · Control de asistencia para Ecuador">
+<meta property="og:description" content="Conecta tus relojes ZKTeco y ve atrasos, faltas, horas extra al 50 % y 100 % y vacaciones de toda tu empresa en un solo panel.">
+<meta property="og:image" content="https://pagina-trueque.vercel.app/rrhh/capturas/inicio.jpg">
+<meta property="og:url" content="https://pagina-trueque.vercel.app/rrhh">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#000000">
+<link rel="icon" type="image/png" href="/rrhh/marca/icono.png">
+<script>document.documentElement.classList.add('js');</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300..700&family=Geist+Mono:wght@400..600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* Negro del logo y los colores de Somos Trueque: azul, azul petróleo, verde y celeste. */
+    --bg: #000000;
+    --bg-2: #070707;
+    --surface: #0f0f0f;
+    --surface-2: #171717;
+    --line: #222222;
+    --line-strong: #323232;
+    --ink: #f3f3f1;
+    --ink-2: #bcbcb6;
+    --ink-3: #85857f;
+    --accent: #2075e0;
+    --accent-hover: #1966c9;
+    --accent-text: #7db5f2;
+    --accent-soft: #0b2443;
+    --teal: #0078a8;
+    --green: #13962a;
+    --green-text: #4fc463;
+    --cyan: #2db4d6;
+    --good: #4fc463;
+    --warning: #f3c75e;
+    --ec-yellow: #f2c418;
+    --ec-blue: #1f4fa3;
+    --ec-red: #c8312a;
+    --radius: 14px;
+    --wrap: 1180px;
+    --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+    --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font: 400 16px/1.55 "Geist", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  img { display: block; max-width: 100%; height: auto; }
+  a { color: inherit; text-decoration: none; }
+  .mono, .num { font-family: "Geist Mono", ui-monospace, Consolas, monospace; font-variant-numeric: tabular-nums; }
+  .wrap { width: 100%; max-width: var(--wrap); margin: 0 auto; padding: 0 20px; }
+  .ic { width: 1.15em; height: 1.15em; flex: none; }
+  ::selection { background: var(--accent); color: #fff; }
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 6px; }
+
+  /* --- Encabezado --- */
+  header.top { position: sticky; top: 0; z-index: 20; background: rgba(0, 0, 0, 0.94); border-bottom: 1px solid transparent; transition: border-color 200ms ease, transform 300ms var(--ease-out); }
+  header.top.scrolled { border-bottom-color: var(--line); }
+  /* Al bajar se esconde para dejar ver; al subir vuelve. */
+  header.top.away { transform: translateY(-100%); }
+  .top .wrap { display: flex; align-items: center; gap: 28px; height: 64px; }
+  .brand { display: inline-flex; align-items: center; gap: 10px; font-weight: 600; font-size: 16px; letter-spacing: -0.01em; }
+  .brand img { width: 30px; height: 30px; border-radius: 7px; }
+  nav.links { display: flex; gap: 22px; font-size: 14px; color: var(--ink-2); }
+  nav.links a:hover { color: var(--ink); }
+  .top .actions { margin-left: auto; display: flex; gap: 8px; align-items: center; }
+
+  .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; height: 40px; padding: 0 16px; border-radius: 10px; font: 500 14.5px/1 "Geist", sans-serif; cursor: pointer; border: 1px solid transparent; white-space: nowrap; transition: background-color 150ms ease, border-color 150ms ease, transform 160ms var(--ease-out); }
+  .btn:active { transform: scale(0.97); }
+  .btn .arrow { transition: transform 200ms var(--ease-out); }
+  @media (hover: hover) and (pointer: fine) {
+    .btn:hover .arrow { transform: translateX(3px); }
+  }
+  .btn-primary { background: var(--accent); color: #fff; }
+  .btn-primary:hover { background: var(--accent-hover); }
+  .btn-line { border-color: var(--line-strong); color: var(--ink); background: transparent; }
+  .btn-line:hover { border-color: #4a4a45; background: var(--surface); }
+  .btn-blue { background: var(--accent); color: #fff; }
+  .btn-blue:hover { background: var(--accent-hover); }
+  .btn-green { background: var(--green); color: #fff; }
+  .btn-green:hover { background: #0f8423; }
+  .btn-lg { height: 46px; padding: 0 20px; font-size: 15px; }
+
+  /* --- Portada --- */
+  .hero { padding: 64px 0 40px; }
+  .hero .wrap { display: grid; grid-template-columns: 1.05fr 1fr; gap: 56px; align-items: start; }
+  .eyebrow { display: inline-flex; align-items: center; gap: 10px; font-size: 13px; color: var(--ink-2); letter-spacing: 0.01em; }
+  .flagbar { display: inline-flex; width: 22px; height: 6px; border-radius: 2px; overflow: hidden; }
+  .flagbar i { display: block; height: 100%; }
+  .flagbar i:nth-child(1) { width: 50%; background: var(--ec-yellow); }
+  .flagbar i:nth-child(2) { width: 25%; background: var(--ec-blue); }
+  .flagbar i:nth-child(3) { width: 25%; background: var(--ec-red); }
+  h1 { font-size: clamp(38px, 5.4vw, 62px); line-height: 1.02; letter-spacing: -0.035em; font-weight: 600; margin: 18px 0 20px; }
+  h1 .soft { color: var(--accent-text); }
+  /* Cada línea del título sube desde abajo, recortada (como una máscara). */
+  h1 .line { display: block; overflow: clip; padding-bottom: 0.1em; margin-bottom: -0.1em; }
+  h1 .line > span { display: inline-block; animation: line-up 1000ms var(--ease-out) both; animation-delay: calc(var(--d, 0) * 1ms); }
+  @keyframes line-up { from { transform: translateY(110%); } to { transform: none; } }
+  @keyframes rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+  @keyframes fade { from { opacity: 0; } to { opacity: 1; } }
+  .hero-copy > :not(h1) { animation: rise 800ms var(--ease-out) both; animation-delay: calc(var(--d, 0) * 1ms); }
+  .hero .calc { animation: rise 900ms var(--ease-out) 260ms both; }
+  .lead { font-size: 18px; color: var(--ink-2); max-width: 54ch; margin: 0 0 26px; }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 30px; }
+  .chip { display: inline-flex; align-items: center; gap: 7px; height: 32px; padding: 0 12px; border: 1px solid var(--line); border-radius: 999px; font-size: 13.5px; color: var(--ink-2); background: var(--bg-2); }
+  .chip .ic { color: var(--ink-3); }
+  .hero-cta { display: flex; flex-wrap: wrap; gap: 10px; }
+  .proof { margin-top: 34px; display: grid; grid-template-columns: repeat(3, auto); gap: 28px; justify-content: start; }
+  .proof b { display: block; font-size: 26px; font-weight: 600; letter-spacing: -0.02em; }
+  .proof span { display: block; font-size: 13px; line-height: 1.4; color: var(--ink-3); margin-top: 4px; }
+
+  /* --- Calculadora --- */
+  .calc { background: var(--surface); border: 1px solid var(--line); border-radius: 18px; padding: 24px; }
+  .calc h2 { font-size: 17px; font-weight: 600; margin: 0 0 4px; letter-spacing: -0.01em; }
+  .calc .sub { margin: 0 0 20px; font-size: 13.5px; color: var(--ink-3); }
+  .field { margin-bottom: 18px; }
+  .field-top { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin-bottom: 8px; font-size: 14px; color: var(--ink-2); }
+  .field-top output { font-family: "Geist Mono", monospace; font-size: 15px; color: var(--ink); background: var(--surface-2); border: 1px solid var(--line); border-radius: 8px; padding: 3px 9px; min-width: 64px; text-align: right; }
+  input[type=range] { -webkit-appearance: none; appearance: none; width: 100%; height: 22px; background: transparent; margin: 0; cursor: pointer; }
+  input[type=range]::-webkit-slider-runnable-track { height: 4px; border-radius: 4px; background: linear-gradient(to right, var(--accent) var(--p, 0%), var(--line-strong) var(--p, 0%)); }
+  input[type=range]::-moz-range-track { height: 4px; border-radius: 4px; background: var(--line-strong); }
+  input[type=range]::-moz-range-progress { height: 4px; border-radius: 4px; background: var(--accent); }
+  input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 20px; height: 20px; border-radius: 50%; background: var(--ink); border: 4px solid var(--surface); margin-top: -8px; box-shadow: 0 0 0 1px var(--line-strong); transition: transform 150ms var(--ease-out); }
+  input[type=range]:active::-webkit-slider-thumb { transform: scale(1.15); }
+  input[type=range]::-moz-range-thumb { width: 14px; height: 14px; border-radius: 50%; background: var(--ink); border: 3px solid var(--surface); }
+  .ticks { display: flex; justify-content: space-between; font-size: 11.5px; color: var(--ink-3); margin-top: 2px; font-family: "Geist Mono", monospace; }
+  .row2 { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; justify-content: space-between; margin: 6px 0 20px; }
+  .seg { display: inline-flex; padding: 3px; border-radius: 10px; background: var(--bg-2); border: 1px solid var(--line); }
+  .seg button { border: 0; background: transparent; color: var(--ink-3); font: 500 13.5px "Geist", sans-serif; height: 32px; padding: 0 12px; border-radius: 7px; cursor: pointer; }
+  .seg button[aria-pressed=true] { background: var(--surface-2); color: var(--ink); box-shadow: inset 0 0 0 1px var(--line-strong); }
+  .seg small { color: var(--green-text); font-weight: 500; margin-left: 4px; }
+  .check { display: inline-flex; align-items: center; gap: 9px; font-size: 14px; color: var(--ink-2); cursor: pointer; }
+  .check input { width: 17px; height: 17px; accent-color: var(--accent); }
+  .result { border-top: 1px solid var(--line); padding-top: 20px; }
+  .plan-line { display: flex; align-items: center; justify-content: space-between; gap: 10px; font-size: 14px; color: var(--ink-2); }
+  .plan-name { display: inline-block; color: var(--ink); font-weight: 600; }
+  .tag { font-size: 12px; padding: 3px 8px; border-radius: 999px; background: var(--accent-soft); color: var(--accent-text); }
+  .price { display: flex; align-items: baseline; gap: 8px; margin: 10px 0 2px; }
+  .price b { font-size: 46px; line-height: 1; font-weight: 600; letter-spacing: -0.03em; font-family: "Geist", sans-serif; font-variant-numeric: tabular-nums; }
+  .price span { color: var(--ink-3); font-size: 15px; }
+  .per { font-size: 13.5px; color: var(--ink-3); margin: 0 0 14px; }
+  .per strong { color: var(--ink-2); font-weight: 500; }
+  .incl { list-style: none; margin: 0 0 18px; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 6px 14px; font-size: 13.5px; color: var(--ink-2); }
+  .incl li { display: flex; gap: 7px; align-items: center; }
+  .incl .ic { color: var(--good); width: 14px; height: 14px; }
+  .calc .btn { width: 100%; }
+  .fine { font-size: 12px; color: var(--ink-3); margin: 10px 0 0; text-align: center; }
+
+  /* --- Captura principal --- */
+  .shot { border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; background: var(--surface); }
+  .shot .bar { display: flex; align-items: center; gap: 10px; height: 38px; padding: 0 14px; border-bottom: 1px solid var(--line); background: var(--bg-2); }
+  .shot .url { flex: 1; max-width: 340px; margin: 0 auto; height: 22px; border-radius: 6px; background: var(--surface-2); color: var(--ink-3); font-size: 12px; display: flex; align-items: center; justify-content: center; font-family: "Geist Mono", monospace; }
+  .shot .dots { display: flex; gap: 6px; }
+  .shot .dots i { width: 9px; height: 9px; border-radius: 50%; background: var(--line-strong); }
+  .showcase { padding: 24px 0 24px; }
+  /* La captura principal llega inclinada y se endereza al bajar (ligada al scroll donde el navegador lo permite). */
+  .showcase .shot { transform-origin: 50% 0%; }
+  @supports (animation-timeline: view()) {
+    .showcase .shot { animation: straighten linear both; animation-timeline: view(); animation-range: entry 0% cover 42%; }
+    @keyframes straighten {
+      from { opacity: 0.35; transform: perspective(1400px) rotateX(16deg) scale(0.93); }
+      to { opacity: 1; transform: none; }
+    }
+  }
+  .caption { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 10px; margin-top: 14px; font-size: 13.5px; color: var(--ink-3); }
+
+  /* --- Aparecer al bajar (una sola vez; solo con JavaScript, así sin él todo se ve) --- */
+  html.js [data-reveal] {
+    opacity: 0;
+    transform: translateY(18px);
+    /* El escalonado solo afecta la aparición; el hover (borde, elevación) responde sin espera. */
+    transition: opacity 700ms var(--ease-out), transform 700ms var(--ease-out), translate 250ms var(--ease-out), border-color 200ms ease;
+    transition-delay: calc(var(--i, 0) * 70ms), calc(var(--i, 0) * 70ms), 0s, 0s;
+  }
+  html.js [data-reveal="shot"] { transform: translateY(28px) scale(0.97); transition-duration: 900ms, 900ms, 250ms, 200ms; }
+  html.js [data-reveal="tilt"] { opacity: 0.35; transform: perspective(1400px) rotateX(16deg) scale(0.93); transition-duration: 1100ms, 1100ms, 250ms, 200ms; }
+  html.js [data-reveal="line"] { opacity: 1; transform: none; }
+  html.js [data-reveal].in { opacity: 1; transform: none; }
+
+  /* --- Secciones --- */
+  section.block { padding: 96px 0; }
+  section.block + section.block { border-top: 1px solid var(--line); }
+  .kicker { font-size: 13px; color: var(--green-text); font-weight: 500; letter-spacing: 0.02em; margin: 0 0 12px; }
+  h2.title { font-size: clamp(28px, 3.6vw, 42px); line-height: 1.08; letter-spacing: -0.03em; font-weight: 600; margin: 0 0 16px; max-width: 22ch; }
+  p.intro { font-size: 17px; color: var(--ink-2); max-width: 62ch; margin: 0; }
+
+  .three { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 44px; }
+  .card { border: 1px solid var(--line); border-radius: var(--radius); padding: 24px; background: var(--bg-2); transition: border-color 200ms ease; }
+  @media (hover: hover) and (pointer: fine) {
+    .card:hover { border-color: var(--line-strong); }
+  }
+  .card .ic-box { width: 38px; height: 38px; border-radius: 10px; display: grid; place-items: center; background: var(--surface-2); border: 1px solid var(--line); margin-bottom: 18px; }
+  .card .ic-box .ic { width: 20px; height: 20px; color: var(--accent-text); }
+  .card h3 { font-size: 17px; font-weight: 600; margin: 0 0 8px; letter-spacing: -0.01em; }
+  .card p { margin: 0; font-size: 14.5px; color: var(--ink-2); }
+
+  .feature { display: grid; grid-template-columns: 0.85fr 1.4fr; gap: 48px; align-items: center; padding: 56px 0; border-top: 1px solid var(--line); }
+  .feature:first-of-type { border-top: 0; }
+  .feature.flip { grid-template-columns: 1.4fr 0.85fr; }
+  .feature.flip .text { order: 2; }
+  .feature h3 { font-size: 26px; line-height: 1.15; letter-spacing: -0.025em; font-weight: 600; margin: 0 0 12px; }
+  .feature p { color: var(--ink-2); margin: 0 0 16px; font-size: 15.5px; }
+  .points { list-style: none; padding: 0; margin: 0; display: grid; gap: 9px; font-size: 14.5px; color: var(--ink-2); }
+  .points li { display: flex; gap: 10px; align-items: flex-start; }
+  .points .ic { color: var(--ink-3); margin-top: 3px; width: 16px; height: 16px; }
+  .law { display: inline-flex; align-items: center; gap: 6px; font-size: 12.5px; color: var(--ink-3); border: 1px solid var(--line); border-radius: 999px; padding: 3px 10px; margin-top: 14px; }
+
+  /* Cómo funciona */
+  .flow { position: relative; display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; margin-top: 48px; border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; }
+  /* Una línea verde a azul recorre los cuatro pasos: el camino de la marcación. */
+  .flow::before { content: ""; position: absolute; z-index: 1; left: 0; right: 0; top: 0; height: 2px; background: linear-gradient(90deg, var(--green), var(--accent)); transform: scaleX(0); transform-origin: 0 50%; transition: transform 1600ms var(--ease-in-out) 150ms; }
+  .flow.in::before { transform: scaleX(1); }
+  .step { padding: 24px; border-right: 1px solid var(--line); background: var(--bg-2); position: relative; }
+  .step:last-child { border-right: 0; }
+  .step .n { font-family: "Geist Mono", monospace; font-size: 12px; color: var(--ink-3); }
+  .step h4 { font-size: 16px; margin: 14px 0 6px; font-weight: 600; display: flex; align-items: center; gap: 8px; }
+  .step h4 .ic { color: var(--ink-2); }
+  .step p { margin: 0; font-size: 14px; color: var(--ink-2); }
+  .note { margin-top: 18px; font-size: 14px; color: var(--ink-3); display: flex; gap: 8px; align-items: center; }
+
+  /* Celular y Odoo */
+  .duo { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 44px; }
+  .panel { border: 1px solid var(--line); border-radius: var(--radius); background: var(--bg-2); padding: 28px; overflow: hidden; }
+  .panel h3 { font-size: 22px; letter-spacing: -0.02em; margin: 0 0 10px; font-weight: 600; }
+  .panel p { color: var(--ink-2); font-size: 15px; margin: 0 0 18px; }
+  .phone { width: 230px; margin: 8px auto -60px; border: 1px solid var(--line-strong); border-radius: 34px; padding: 8px; background: #050505; }
+  .phone img { border-radius: 26px; }
+  .odoo-map { display: grid; grid-template-columns: 1fr auto 1fr; gap: 12px; align-items: center; margin-top: 8px; }
+  .node { border: 1px solid var(--line); border-radius: 12px; padding: 14px; background: var(--surface); font-size: 13.5px; }
+  .node b { display: block; font-size: 14.5px; margin-bottom: 6px; }
+  .node ul { margin: 0; padding-left: 16px; color: var(--ink-2); }
+  .link-arrow { color: var(--ink-3); display: grid; place-items: center; }
+
+  /* Planes */
+  .plans { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-top: 44px; }
+  .plan { border: 1px solid var(--line); border-radius: var(--radius); padding: 22px; background: var(--bg-2); display: flex; flex-direction: column; transition: border-color 200ms ease, translate 250ms var(--ease-out); }
+  @media (hover: hover) and (pointer: fine) {
+    .plan:hover { translate: 0 -3px; border-color: var(--line-strong); }
+    .plan.pop:hover { border-color: var(--accent); }
+    .plan.top:hover { border-color: var(--green); }
+  }
+  .plan.pop { border-color: var(--accent); background: var(--surface); }
+  .plan.top { border-color: var(--green); }
+  .plan .extra { margin: -6px 0 16px; font-size: 12.5px; color: var(--green-text); }
+  .plan h4 { margin: 0; font-size: 15px; font-weight: 600; display: flex; justify-content: space-between; align-items: center; gap: 6px; }
+  .plan .amount { font-size: 32px; font-weight: 600; letter-spacing: -0.03em; margin: 14px 0 0; font-variant-numeric: tabular-nums; }
+  .plan .amount small { font-size: 13px; color: var(--ink-3); font-weight: 400; letter-spacing: 0; }
+  .plan .month { font-size: 12.5px; color: var(--ink-3); margin: 2px 0 16px; }
+  .plan ul { list-style: none; padding: 0; margin: 0 0 18px; display: grid; gap: 7px; font-size: 13.5px; color: var(--ink-2); }
+  .plan ul li { display: flex; gap: 7px; align-items: center; }
+  .plan ul .ic { width: 14px; height: 14px; color: var(--good); }
+  .plan ul li.off { color: var(--ink-3); }
+  .plan ul li.off .ic { color: var(--ink-3); }
+  .plan .btn { margin-top: auto; width: 100%; height: 38px; font-size: 14px; }
+  .custom { margin-top: 12px; border: 1px dashed var(--line-strong); border-radius: var(--radius); padding: 18px 20px; display: flex; flex-wrap: wrap; gap: 12px; align-items: center; justify-content: space-between; color: var(--ink-2); font-size: 14.5px; }
+  .all { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px 24px; margin: 40px 0 0; padding: 0; list-style: none; font-size: 14.5px; color: var(--ink-2); }
+  .all li { display: flex; gap: 9px; align-items: center; }
+  .all .ic { color: var(--good); width: 15px; height: 15px; }
+  table.svc { width: 100%; border-collapse: collapse; margin-top: 28px; font-size: 14.5px; }
+  .svc th, .svc td { text-align: left; padding: 13px 0; border-top: 1px solid var(--line); }
+  .svc th { color: var(--ink-3); font-weight: 500; font-size: 13px; }
+  .svc td:last-child, .svc th:last-child { text-align: right; }
+  .svc td.t { color: var(--ink-3); }
+
+  /* Preguntas */
+  .faq { margin-top: 36px; border-top: 1px solid var(--line); }
+  details { border-bottom: 1px solid var(--line); }
+  summary { list-style: none; cursor: pointer; padding: 20px 0; display: flex; justify-content: space-between; gap: 16px; font-size: 17px; font-weight: 500; }
+  summary::-webkit-details-marker { display: none; }
+  summary .ic { color: var(--ink-3); transition: transform 250ms var(--ease-out); margin-top: 3px; }
+  /* Las respuestas se abren con altura animada donde el navegador lo permite (si no, se abren al instante). */
+  @supports (interpolate-size: allow-keywords) {
+    details { interpolate-size: allow-keywords; }
+    details::details-content { height: 0; overflow: clip; transition: height 280ms var(--ease-out), content-visibility 280ms allow-discrete; }
+    details[open]::details-content { height: auto; }
+  }
+  details[open] summary .ic { transform: rotate(180deg); }
+  details p { margin: 0 0 22px; color: var(--ink-2); max-width: 75ch; font-size: 15.5px; }
+
+  /* Cierre y pie */
+  .closing { text-align: left; display: grid; grid-template-columns: 1.3fr 1fr; gap: 40px; align-items: end; }
+  .closing .hero-cta { justify-content: flex-end; }
+  footer { border-top: 1px solid var(--line); padding: 40px 0 44px; color: var(--ink-3); font-size: 13.5px; }
+  .owner { display: flex; flex-direction: column; gap: 10px; }
+  .owner img { width: 210px; height: auto; }
+  footer .wrap { display: flex; flex-wrap: wrap; gap: 18px 32px; align-items: center; justify-content: space-between; }
+  footer .made { display: inline-flex; align-items: center; gap: 10px; }
+  footer nav { display: flex; gap: 20px; flex-wrap: wrap; }
+  footer a:hover { color: var(--ink); }
+
+  @media (prefers-reduced-motion: reduce) {
+    h1 .line > span { animation: none; }
+    .hero-copy > :not(h1), .hero .calc { animation: fade 300ms ease both; }
+    .showcase .shot { animation: none !important; }
+    html.js [data-reveal], html.js [data-reveal="shot"], html.js [data-reveal="tilt"] { transform: none; transition: opacity 300ms ease, border-color 200ms ease; transition-delay: 0s; }
+    .flow::before { transform: none; transition: none; }
+    header.top, .plan, .btn, .btn .arrow, input[type=range]::-webkit-slider-thumb { transition-property: background-color, border-color; }
+  }
+
+  /* --- Términos y condiciones --- */
+  .legal-link { color: var(--ink-2); text-decoration: underline; text-underline-offset: 3px; text-decoration-color: var(--line-strong); }
+  .legal-link:hover { color: var(--ink); }
+  dialog.terms {
+    width: min(820px, calc(100vw - 32px));
+    max-height: min(88vh, 960px);
+    padding: 0;
+    border: 1px solid var(--line-strong);
+    border-radius: 18px;
+    background: var(--surface);
+    color: var(--ink);
+    opacity: 0;
+    transform: scale(0.96);
+    transition: opacity 250ms var(--ease-out), transform 250ms var(--ease-out), overlay 250ms allow-discrete, display 250ms allow-discrete;
+  }
+  dialog.terms[open] { opacity: 1; transform: none; }
+  @starting-style { dialog.terms[open] { opacity: 0; transform: scale(0.96); } }
+  dialog.terms::backdrop { background: rgb(0 0 0 / 0); transition: background-color 250ms var(--ease-out), overlay 250ms allow-discrete, display 250ms allow-discrete; }
+  dialog.terms[open]::backdrop { background: rgb(0 0 0 / 0.72); }
+  @starting-style { dialog.terms[open]::backdrop { background: rgb(0 0 0 / 0); } }
+  .terms-head { position: sticky; top: 0; z-index: 1; display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 18px 24px; background: var(--surface); border-bottom: 1px solid var(--line); }
+  .terms-head h2 { margin: 0; font-size: 18px; font-weight: 600; letter-spacing: -0.01em; }
+  .terms-head p { margin: 2px 0 0; font-size: 12.5px; color: var(--ink-3); }
+  .terms-body { padding: 8px 24px 28px; overflow-y: auto; max-height: calc(min(88vh, 960px) - 76px); font-size: 14.5px; color: var(--ink-2); }
+  .terms-body h3 { color: var(--ink); font-size: 15.5px; font-weight: 600; margin: 26px 0 8px; }
+  .terms-body p, .terms-body li { line-height: 1.6; }
+  .terms-body ul { padding-left: 18px; margin: 8px 0; }
+  .terms-body li + li { margin-top: 4px; }
+  .terms-body .box { border: 1px solid var(--line); border-radius: 12px; background: var(--bg-2); padding: 14px 16px; margin-top: 10px; }
+  .terms-body .box p { margin: 0; }
+  .x { width: 34px; height: 34px; border-radius: 9px; border: 1px solid var(--line-strong); background: transparent; color: var(--ink-2); cursor: pointer; display: grid; place-items: center; font-size: 18px; line-height: 1; transition: background-color 150ms ease, transform 160ms var(--ease-out); }
+  .x:hover { background: var(--surface-2); color: var(--ink); }
+  .x:active { transform: scale(0.94); }
+  @media (prefers-reduced-motion: reduce) {
+    dialog.terms, dialog.terms[open] { transform: none; }
+    @starting-style { dialog.terms[open] { transform: none; } }
+  }
+
+  /* Teléfono y tablet */
+  @media (max-width: 1080px) {
+    .plans { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 960px) {
+    nav.links { display: none; }
+    .hero .wrap, .feature, .feature.flip, .duo, .closing { grid-template-columns: 1fr; }
+    .feature.flip .text { order: 0; }
+    .hero { padding-top: 36px; }
+    /* En celular la calculadora va justo después del título. */
+    .hero .wrap { gap: 0; }
+    .hero-copy { display: contents; }
+    .hero-copy > .eyebrow, .hero-copy > h1, .hero-copy > .lead { order: 1; }
+    .hero .calc { order: 2; margin: 4px 0 30px; }
+    .hero-copy > .chips, .hero-copy > .hero-cta, .hero-copy > .proof { order: 3; }
+    .hero-copy > .eyebrow { justify-self: start; }
+    .three, .all { grid-template-columns: 1fr 1fr; }
+    .flow { grid-template-columns: 1fr 1fr; }
+    .step:nth-child(2) { border-right: 0; }
+    .step:nth-child(-n+2) { border-bottom: 1px solid var(--line); }
+    .closing .hero-cta { justify-content: flex-start; }
+    section.block { padding: 72px 0; }
+    .feature { gap: 26px; padding: 44px 0; }
+  }
+  @media (max-width: 620px) {
+    .wrap { padding: 0 16px; }
+    .top .actions .btn-line { display: none; }
+    .three, .all, .flow, .plans, .incl { grid-template-columns: 1fr; }
+    .step { border-right: 0; border-bottom: 1px solid var(--line); }
+    .step:last-child { border-bottom: 0; }
+    .proof { grid-template-columns: repeat(3, 1fr); gap: 14px; }
+    .proof b { font-size: 21px; }
+    .calc { padding: 18px; }
+    .price b { font-size: 40px; }
+    .odoo-map { grid-template-columns: 1fr; }
+    .link-arrow { transform: rotate(90deg); }
+    .shot .bar { display: none; }
+    .lead { font-size: 16.5px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="top" id="top">
+  <div class="wrap">
+    <a class="brand" href="#" aria-label="Trueque HR, inicio"><img src="/rrhh/marca/icono.png" width="30" height="30" alt="">Trueque HR</a>
+    <nav class="links" aria-label="Secciones">
+      <a href="#calculadora">Calculadora</a>
+      <a href="#funciones">Funciones</a>
+      <a href="#como-funciona">Cómo funciona</a>
+      <a href="#planes">Planes</a>
+      <a href="#preguntas">Preguntas</a>
+    </nav>
+    <div class="actions">
+      <a class="btn btn-line" href="https://trueque.172-235-136-212.sslip.io/">Entrar</a>
+      <a class="btn btn-primary" data-contact="Hola, quiero ver una demo de Trueque HR." href="#contacto">Pedir una demo</a>
+    </div>
+  </div>
+</header>
+
+<main>
+  <!-- Portada con la calculadora -->
+  <section class="hero" id="calculadora">
+    <div class="wrap">
+      <div class="hero-copy">
+        <span class="eyebrow" style="--d:0"><span class="flagbar" aria-hidden="true"><i></i><i></i><i></i></span>Control de asistencia hecho en Ecuador</span>
+        <h1><span class="line"><span style="--d:80">Tus relojes biométricos,</span></span><span class="line"><span class="soft" style="--d:190">conectados y al día.</span></span></h1>
+        <p class="lead" style="--d:320">Trueque HR junta las marcaciones de todos tus relojes ZKTeco en un solo panel: quién llegó tarde, quién falta y cuántas horas extra hizo cada persona, calculadas según el Código del Trabajo.</p>
+        <div class="chips" style="--d:400">
+          <span class="chip"><svg class="ic" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 256 256"><path d="M213.92,210.62a8,8,0,1,1-11.84,10.76l-52-57.15a60,60,0,0,0-57.41,7.24,8,8,0,1,1-9.42-12.93A75.43,75.43,0,0,1,128,144c1.28,0,2.55,0,3.82.1L104.9,114.49A108,108,0,0,0,61,135.31,8,8,0,0,1,49.73,134,8,8,0,0,1,51,122.77a124.27,124.27,0,0,1,41.71-21.66L69.37,75.4a155.43,155.43,0,0,0-40.29,24A8,8,0,0,1,18.92,87,171.87,171.87,0,0,1,58,62.86L42.08,45.38A8,8,0,1,1,53.92,34.62ZM128,192a12,12,0,1,0,12,12A12,12,0,0,0,128,192ZM237.08,87A172.3,172.3,0,0,0,106,49.4a8,8,0,1,0,2,15.87A158.33,158.33,0,0,1,128,64a156.25,156.25,0,0,1,98.92,35.37A8,8,0,0,0,237.08,87ZM195,135.31a8,8,0,0,0,11.24-1.3,8,8,0,0,0-1.3-11.24,124.25,124.25,0,0,0-51.73-24.2A8,8,0,1,0,150,114.24,108.12,108.12,0,0,1,195,135.31Z"></path></svg>Sin IP pública ni servidores</span>
+          <span class="chip"><svg class="ic" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 256 256"><path d="M128,64a40,40,0,1,0,40,40A40,40,0,0,0,128,64Zm0,64a24,24,0,1,1,24-24A24,24,0,0,1,128,128Zm0-112a88.1,88.1,0,0,0-88,88c0,31.4,14.51,64.68,42,96.25a254.19,254.19,0,0,0,41.45,38.3,8,8,0,0,0,9.18,0A254.19,254.19,0,0,0,174,200.25c27.45-31.57,42-64.85,42-96.25A88.1,88.1,0,0,0,128,16Zm0,206c-16.53-13-72-60.75-72-118a72,72,0,0,1,144,0C200,161.23,144.53,209,128,222Z"></path></svg>Varias sedes en una pantalla</span>
+          <span class="chip"><svg class="ic" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 256 256"><path d="M213.66,181.66l-32,32a8,8,0,0,1-11.32-11.32L188.69,184H48a8,8,0,0,1,0-16H188.69l-18.35-18.34a8,8,0,0,1,11.32-11.32l32,32A8,8,0,0,1,213.66,181.66Zm-139.32-64a8,8,0,0,0,11.32-11.32L67.31,88H208a8,8,0,0,0,0-16H67.31L85.66,53.66A8,8,0,0,0,74.34,42.34l-32,32a8,8,0,0,0,0,11.32Z"></path></svg>Enlace con Odoo</span>
+        </div>
+        <div class="hero-cta" style="--d:470">
+          <a class="btn btn-primary btn-lg" data-contact="Hola, quiero ver una demo de Trueque HR con mis relojes." href="#contacto"><svg class="ic" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 256 256"><path d="M187.58,144.84l-32-16a8,8,0,0,0-8,.5l-14.69,9.8a40.55,40.55,0,0,1-16-16l9.8-14.69a8,8,0,0,0,.5-8l-16-32A8,8,0,0,0,104,64a40,40,0,0,0-40,40,88.1,88.1,0,0,0,88,88,40,40,0,0,0,40-40A8,8,0,0,0,187.58,144.84ZM152,176a72.08,72.08,0,0,1-72-72A24,24,0,0,1,99.29,80.46l11.48,23L101,118a8,8,0,0,0-.73,7.51,56.47,56.47,0,0,0,30.15,30.15A8,8,0,0,0,138,155l14.61-9.74,23,11.48A24,24,0,0,1,152,176ZM128,24A104,104,0,0,0,36.18,176.88L24.83,210.93a16,16,0,0,0,20.24,20.24l34.05-11.35A104,104,0,1,0,128,24Zm0,192a87.87,87.87,0,0,1-44.06-11.81,8,8,0,0,0-6.54-.67L40,216,52.47,178.6a8,8,0,0,0-.66-6.54A88,88,0,1,1,128,216Z"></path></svg>Ver una demo</a>
+          <a class="btn btn-line btn-lg" href="#funciones">Ver cómo se ve <span class="arrow" aria-hidden="true">→</span></a>
+        </div>
+        <div class="proof" style="--d:540">
+          <div><b>$149</b><span>al año, el plan<br>más pequeño</span></div>
+          <div><b>Art. 55</b><span>horas extra<br>al 50 y 100 %</span></div>
+          <div><b>Ecuador</b><span>soporte en español,<br>desde Cuenca</span></div>
+        </div>
+      </div>
+
+      <form class="calc" id="calc" aria-labelledby="calc-title" onsubmit="return false">
+        <h2 id="calc-title">Calcula tu plan</h2>
+        <p class="sub">Mueve las barras con los datos de tu empresa.</p>
+
+        <div class="field">
+          <div class="field-top"><label for="emp">Empleados que marcan</label><output id="emp-out" for="emp">40</output></div>
+          <input type="range" id="emp" min="5" max="400" step="5" value="40">
+          <div class="ticks"><span>5</span><span>100</span><span>200</span><span>300</span><span>400+</span></div>
+        </div>
+        <div class="field">
+          <div class="field-top"><label for="clk">Relojes biométricos</label><output id="clk-out" for="clk">1</output></div>
+          <input type="range" id="clk" min="1" max="40" step="1" value="1">
+        </div>
+        <div class="field">
+          <div class="field-top"><label for="sit">Sedes o sucursales</label><output id="sit-out" for="sit">1</output></div>
+          <input type="range" id="sit" min="1" max="20" step="1" value="1">
+        </div>
+
+        <div class="row2">
+          <div class="seg" role="group" aria-label="Forma de pago">
+            <button type="button" data-billing="year" aria-pressed="true">Anual <small>2 meses gratis</small></button>
+            <button type="button" data-billing="month" aria-pressed="false">Mensual</button>
+          </div>
+          <label class="check"><input type="checkbox" id="odoo"> Enlace con Odoo</label>
+        </div>
+
+        <div class="result" aria-live="polite">
+          <div class="plan-line"><span>Plan recomendado: <span class="plan-name" id="r-plan">Estándar</span></span><span class="tag" id="r-tag" hidden>Más elegido</span></div>
+          <div class="price"><b id="r-price">$279</b><span id="r-unit">al año</span></div>
+          <p class="per" id="r-per"></p>
+          <ul class="incl" id="r-incl"></ul>
+          <a class="btn btn-blue btn-lg" id="r-cta" href="#contacto"><svg class="ic" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 256 256"><path d="M187.58,144.84l-32-16a8,8,0,0,0-8,.5l-14.69,9.8a40.55,40.55,0,0,1-16-16l9.8-14.69a8,8,0,0,0,.5-8l-16-32A8,8,0,0,0,104,64a40,40,0,0,0-40,40,88.1,88.1,0,0,0,88,88,40,40,0,0,0,40-40A8,8,0,0,0,187.58,144.84ZM152,176a72.08,72.08,0,0,1-72-72A24,24,0,0,1,99.29,80.46l11.48,23L101,118a8,8,0,0,0-.73,7.51,56.47,56.47,0,0,0,30.15,30.15A8,8,0,0,0,138,155l14.61-9.74,23,11.48A24,24,0,0,1,152,176ZM128,24A104,104,0,0,0,36.18,176.88L24.83,210.93a16,16,0,0,0,20.24,20.24l34.05-11.35A104,104,0,1,0,128,24Zm0,192a87.87,87.87,0,0,1-44.06-11.81,8,8,0,0,0-6.54-.67L40,216,52.47,178.6a8,8,0,0,0-.66-6.54A88,88,0,1,1,128,216Z"></path></svg>Quiero este plan</a>
+          <p class="fine"><span id="r-iva">Precios en dólares, más IVA.</span> Ver <a class="legal-link" href="#terminos" data-terms>términos y condiciones</a>.</p>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <!-- Captura principal -->
+  <div class="showcase">
+    <div class="wrap">
+      <figure class="shot" style="margin:0">
+        <div class="bar" aria-hidden="true"><span class="dots"><i></i><i></i><i></i></span><span class="url">Panel de Trueque HR</span></div>
+        <img src="/rrhh/capturas/inicio.jpg" width="2880" height="1800" alt="Inicio de Trueque HR: llegaron a tiempo, llegaron tarde, todavía no marcan, relojes en línea y la vista de horas de cada persona.">
+      </figure>
+      <div class="caption"><span>Inicio: cómo va la asistencia hoy, sin buscar nada.</span><span>Empresa de ejemplo con 36 personas, 3 sedes y 6 relojes.</span></div>
+    </div>
+  </div>
+
+  <!-- Lo que resuelve -->
+  <section class="block">
+    <div class="wrap">
+      <p class="kicker">Por qué Trueque HR</p>
+      <h2 class="title">Deja de ir reloj por reloj con una memoria USB.</h2>
+      <p class="intro">Los relojes que ya tienes siguen funcionando igual. Lo que cambia es que Recursos Humanos ve todo al momento y fin de mes deja de ser una semana armando Excel.</p>
+      <div class="three">
+        <div class="card"><div class="ic-box"><svg class="ic" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 256 256"><path d="M237.66,18.34a8,8,0,0,0-11.32,0l-52.4,52.41-5.37-5.38a32.05,32.05,0,0,0-45.26,0L100,88.69l-6.34-6.35A8,8,0,0,0,82.34,93.66L88.69,100,65.37,123.31a32,32,0,0,0,0,45.26l5.38,5.37-52.41,52.4a8,8,0,0,0,11.32,11.32l52.4-52.41,5.37,5.38a32,32,0,0,0,45.26,0L156,167.31l6.34,6.35a8,8,0,0,0,11.32-11.32L167.31,156l23.32-23.31a32,32,0,0,0,0-45.26l-5.38-5.37,52.41-52.4A8,8,0,0,0,237.66,18.34Zm-116.29,161a16,16,0,0,1-22.62,0L76.69,157.25a16,16,0,0,1,0-22.62L100,111.31,144.69,156Zm57.94-57.94L156,144.69,111.31,100l23.32-23.31a16,16,0,0,1,22.62,0l22.06,22A16,16,0,0,1,179.31,121.37ZM88.57,35A8,8,0,0,1,103.43,29l8,20A8,8,0,0,1,96.57,55ZM24.57,93A8,8,0,0,1,35,88.57l20,8A8,8,0,0,1,49,111.43l-20-8A8,8,0,0,1,24.57,93ZM231.43,163a8,8,0,0,1-10.4,4.46l-20-8A8,8,0,1,1,207,144.57l20,8A8,8,0,0,1,231.43,163Zm-64,58.06A8,8,0,0,1,152.57,227l-8-20A8,8,0,0,1,159.43,201Z"></path></svg></div><h3>Sin abrir puertos ni pagar IP pública</h3><p>Un programa pequeño en una PC de cada sede lleva las marcaciones a la nube. La conexión sale desde tu oficina, como un navegador.</p></div>
+        <div class="card"><div class="ic-box"><svg class="ic" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 256 256"><path d="M128,64a40,40,0,1,0,40,40A40,40,0,0,0,128,64Zm0,64a24,24,0,1,1,24-24A24,24,0,0,1,128,128Zm0-112a88.1,88.1,0,0,0-88,88c0,31.4,14.51,64.68,42,96.25a254.19,254.19,0,0,0,41.45,38.3,8,8,0,0,0,9.18,0A254.19,254.19,0,0,0,174,200.25c27.45-31.57,42-64.85,42-96.25A88.1,88.1,0,0,0,128,16Zm0,206c-16.53-13-72-60.75-72-118a72,72,0,0,1,144,0C200,161.23,144.53,209,128,222Z"></path></svg></div><h3>Todas tus sedes, juntas</h3><p>Matriz, sucursales y planta en un solo panel. Filtra por sede o por reloj. Si alguien entra por un reloj y sale por otro, se junta solo.</p></div>
+        <div class="card"><div class="ic-box"><svg class="ic" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 256 256"><path d="M239.43,133l-32-80h0a8,8,0,0,0-9.16-4.84L136,62V40a8,8,0,0,0-16,0V65.58L54.26,80.19A8,8,0,0,0,48.57,85h0v.06L16.57,165a7.92,7.92,0,0,0-.57,3c0,23.31,24.54,32,40,32s40-8.69,40-32a7.92,7.92,0,0,0-.57-3L66.92,93.77,120,82V208H104a8,8,0,0,0,0,16h48a8,8,0,0,0,0-16H136V78.42L187,67.1,160.57,133a7.92,7.92,0,0,0-.57,3c0,23.31,24.54,32,40,32s40-8.69,40-32A7.92,7.92,0,0,0,239.43,133ZM56,184c-7.53,0-22.76-3.61-23.93-14.64L56,109.54l23.93,59.82C78.76,180.39,63.53,184,56,184Zm144-32c-7.53,0-22.76-3.61-23.93-14.64L200,77.54l23.93,59.82C222.76,148.39,207.53,152,200,152Z"></path></svg></div><h3>Pensado para la ley de Ecuador</h3><p>Horas extra al 50 % y al 100 %, vacaciones de 15 días más los de antigüedad, feriados nacionales y cédula validada.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Funciones con capturas -->
+  <section class="block" id="funciones">
+    <div class="wrap">
+      <p class="kicker">Funciones</p>
+      <h2 class="title">Cada pantalla responde una pregunta.</h2>
+      <p class="intro">Nada de tablas imposibles. Abres, miras y sabes qué pasó.</p>
+
+      <div class="feature">
+        <div class="text">
+          <h3>Entrada, almuerzo, regreso y salida de cada persona.</h3>
+          <p>La vista de horas pone cada marcación sobre el horario. Lo que pasa de la salida se ve en verde; si alguien no marcó la salida, se nota de inmediato.</p>
+          <ul class="points">
+            <li><svg class="ic" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 256 256"><path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm0,192a88,88,0,1,1,88-88A88.1,88.1,0,0,1,128,216Zm64-88a8,8,0,0,1-8,8H128a8,8,0,0,1-8-8V72a8,8,0,0,1,16,0v48h48A8,8,0,0,1,192,128Z"></path></svg>Por día o por cualquier periodo pasado</li>
+            <li><svg class="ic" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 256 256"><path d="M224,71.1a8,8,0,0,1-10.78-3.42,94.13,94.13,0,0,0-33.46-36.91,8,8,0,1,1,8.54-13.54,111.46,111.46,0,0,1,39.12,43.09A8,8,0,0,1,224,71.1ZM35.71,72a8,8,0,0,0,7.1-4.32A94.13,94.13,0,0,1,76.27,30.77a8,8,0,1,0-8.54-13.54A111.46,111.46,0,0,0,28.61,60.32,8,8,0,0,0,35.71,72Zm186.1,103.94A16,16,0,0,1,208,200H167.2a40,40,0,0,1-78.4,0H48a16,16,0,0,1-13.79-24.06C43.22,160.39,48,138.28,48,112a80,80,0,0,1,160,0C208,138.27,212.78,160.38,221.81,175.94ZM150.62,200H105.38a24,24,0,0,0,45.24,0ZM208,184c-10.64-18.27-16-42.49-16-72a64,64,0,0,0-128,0c0,29.52-5.38,53.74-16,72Z"></path></svg>Aviso en la computadora cuando alguien llega tarde</li>
+            <li><svg class="ic" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 256 256"><path d="M208,32H184V24a8,8,0,0,0-16,0v8H88V24a8,8,0,0,0-16,0v8H48A16,16,0,0,0,32,48V208a16,16,0,0,0,16,16H208a16,16,0,0,0,16-16V48A16,16,0,0,0,208,32ZM72,48v8a8,8,0,0,0,16,0V48h80v8a8,8,0,0,0,16,0V48h24V80H48V48ZM208,208H48V96H208V208Zm-38.34-85.66a8,8,0,0,1,0,11.32l-48,48a8,8,0,0,1-11.32,0l-24-24a8,8,0,0,1,11.32-11.32L116,164.69l42.34-42.35A8,8,0,0,1,169.66,122.34Z"></path></svg>Permisos por horas: no cuentan como atraso</li>
+          </ul>
+        </div>
+        <figure class="shot" style="margin:0"><img loading="lazy" src="/rrhh/capturas/asistencia-dia.jpg" width="2880" height="1800" alt="Asistencia por día con la vista de horas de cada persona."></figure>
+      </div>
+
+      <div class="feature flip">
+        <div class="text">
+          <h3>Horas extra al 50 % y al 100 %, como pide la ley.</h3>
+          <p>De lunes a viernes después de la salida van al 50 %; sábado, domingo y feriados al 100 %. Se marcan los días que pasan de las 4 horas que permite la ley.</p>
+          <ul class="points">
+            <li><svg class="ic" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 256 256"><path d="M200,24H72A16,16,0,0,0,56,40V64H40A16,16,0,0,0,24,80v96a16,16,0,0,0,16,16H56v24a16,16,0,0,0,16,16H200a16,16,0,0,0,16-16V40A16,16,0,0,0,200,24Zm-40,80h40v48H160Zm40-16H160V80a16,16,0,0,0-16-16V40h56ZM72,40h56V64H72ZM40,80H144v79.83c0,.06,0,.11,0,.17s0,.11,0,.17V176H40ZM72,192h56v24H72Zm72,24V192a16,16,0,0,0,16-16v-8h40v48ZM65.85,146.88,81.59,128,65.85,109.12a8,8,0,0,1,12.3-10.24L92,115.5l13.85-16.62a8,8,0,1,1,12.3,10.24L102.41,128l15.74,18.88a8,8,0,0,1-12.3,10.24L92,140.5,78.15,157.12a8,8,0,0,1-12.3-10.24Z"></path></svg>Excel del mes para toda la empresa o por persona</li>
+            <li><svg class="ic" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 256 256"><path d="M128,40a96,96,0,1,0,96,96A96.11,96.11,0,0,0,128,40Zm0,176a80,80,0,1,1,80-80A80.09,80.09,0,0,1,128,216ZM173.66,90.34a8,8,0,0,1,0,11.32l-40,40a8,8,0,0,1-11.32-11.32l40-40A8,8,0,0,1,173.66,90.34ZM96,16a8,8,0,0,1,8-8h48a8,8,0,0,1,0,16H104A8,8,0,0,1,96,16Z"></path></svg>Tu empresa decide desde cuántos minutos cuentan</li>
+            <li><svg class="ic" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 256 256"><path d="M224,128a8,8,0,0,1-8,8H128a8,8,0,0,1,0-16h88A8,8,0,0,1,224,128ZM128,72h88a8,8,0,0,0,0-16H128a8,8,0,0,0,0,16Zm88,112H128a8,8,0,0,0,0,16h88a8,8,0,0,0,0-16ZM82.34,42.34,56,68.69,45.66,58.34A8,8,0,0,0,34.34,69.66l16,16a8,8,0,0,0,11.32,0l32-32A8,8,0,0,0,82.34,42.34Zm0,64L56,132.69,45.66,122.34a8,8,0,0,0-11.32,11.32l16,16a8,8,0,0,0,11.32,0l32-32a8,8,0,0,0-11.32-11.32Zm0,64L56,196.69,45.66,186.34a8,8,0,0,0-11.32,11.32l16,16a8,8,0,0,0,11.32,0l32-32a8,8,0,0,0-11.32-11.32Z"></path></svg>Resumen, detalle por día, horas extra y atrasos</li>
+          </ul>
+          <span class="law">Código del Trabajo, art. 55</span>
+        </div>
+        <figure class="shot" style="margin:0"><img loading="lazy" src="/rrhh/capturas/horas-extra.jpg" width="2880" height="1800" alt="Horas extra del mes de cada persona separadas al 50 % y al 100 %."></figure>
+      </div>
+
+      <div class="feature">
+        <div class="text">
+          <h3>Cuántos días de vacaciones le quedan a cada uno.</h3>
+          <p>15 días por año de trabajo y uno más por cada año después del quinto. Se ganan día a día y se descuentan solas al registrar las vacaciones. También las horas de permiso del año.</p>
+          <ul class="points">
+            <li><svg class="ic" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 256 256"><path d="M185.33,114.21l29.14-27.42.17-.17a32,32,0,0,0-45.26-45.26c0,.06-.11.11-.17.17L141.79,70.67l-83-30.2a8,8,0,0,0-8.39,1.86l-24,24a8,8,0,0,0,1.22,12.31l63.89,42.59L76.69,136H56a8,8,0,0,0-5.65,2.34l-24,24A8,8,0,0,0,29,175.42l36.82,14.73,14.7,36.75.06.16a8,8,0,0,0,13.18,2.47l23.87-23.88A8,8,0,0,0,120,200V179.31l14.76-14.76,42.59,63.89a8,8,0,0,0,12.31,1.22l24-24a8,8,0,0,0,1.86-8.39Zm-.07,97.23-42.59-63.88A8,8,0,0,0,136.8,144c-.27,0-.53,0-.79,0a8,8,0,0,0-5.66,2.35l-24,24A8,8,0,0,0,104,176v20.69L90.93,209.76,79.43,181A8,8,0,0,0,75,176.57l-28.74-11.5L59.32,152H80a8,8,0,0,0,5.66-2.34l24-24a8,8,0,0,0-1.22-12.32L44.56,70.74l13.5-13.49,83.22,30.26a8,8,0,0,0,8.56-2L180.78,52.6A16,16,0,0,1,203.4,75.23l-32.87,30.93a8,8,0,0,0-2,8.56l30.26,83.22Z"></path></svg>Vacaciones, permisos, enfermedad, maternidad y paternidad</li>
+            <li><svg class="ic" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 256 256"><path d="M208,32H184V24a8,8,0,0,0-16,0v8H88V24a8,8,0,0,0-16,0v8H48A16,16,0,0,0,32,48V208a16,16,0,0,0,16,16H208a16,16,0,0,0,16-16V48A16,16,0,0,0,208,32ZM72,48v8a8,8,0,0,0,16,0V48h80v8a8,8,0,0,0,16,0V48h24V80H48V48ZM208,208H48V96H208V208Zm-38.34-85.66a8,8,0,0,1,0,11.32l-48,48a8,8,0,0,1-11.32,0l-24-24a8,8,0,0,1,11.32-11.32L116,164.69l42.34-42.35A8,8,0,0,1,169.66,122.34Z"></path></svg>Feriados nacionales de Ecuador con un clic</li>
+            <li><svg class="ic" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 256 256"><path d="M200,24H72A16,16,0,0,0,56,40V64H40A16,16,0,0,0,24,80v96a16,16,0,0,0,16,16H56v24a16,16,0,0,0,16,16H200a16,16,0,0,0,16-16V40A16,16,0,0,0,200,24Zm-40,80h40v48H160Zm40-16H160V80a16,16,0,0,0-16-16V40h56ZM72,40h56V64H72ZM40,80H144v79.83c0,.06,0,.11,0,.17s0,.11,0,.17V176H40ZM72,192h56v24H72Zm72,24V192a16,16,0,0,0,16-16v-8h40v48ZM65.85,146.88,81.59,128,65.85,109.12a8,8,0,0,1,12.3-10.24L92,115.5l13.85-16.62a8,8,0,1,1,12.3,10.24L102.41,128l15.74,18.88a8,8,0,0,1-12.3,10.24L92,140.5,78.15,157.12a8,8,0,0,1-12.3-10.24Z"></path></svg>Saldos de toda la empresa en Excel</li>
+          </ul>
+          <span class="law">Código del Trabajo, art. 69 a 76</span>
+        </div>
+        <figure class="shot" style="margin:0"><img loading="lazy" src="/rrhh/capturas/saldos.jpg" width="2880" height="1800" alt="Saldos de vacaciones y permisos de cada persona."></figure>
+      </div>
+
+      <div class="feature flip">
+        <div class="text">
+          <h3>Tus relojes, vigilados desde la web.</h3>
+          <p>Ves cuáles están en línea, cuántas personas y marcaciones tiene cada uno, y la hora del reloj. Agregas, editas o borras personas en cualquier reloj sin ir hasta él.</p>
+          <ul class="points">
+            <li><svg class="ic" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 256 256"><path d="M72,128a134.63,134.63,0,0,1-14.16,60.47,8,8,0,1,1-14.32-7.12A118.8,118.8,0,0,0,56,128,71.73,71.73,0,0,1,83,71.8,8,8,0,1,1,93,84.29,55.76,55.76,0,0,0,72,128Zm56-8a8,8,0,0,0-8,8,184.12,184.12,0,0,1-23,89.1,8,8,0,0,0,14,7.76A200.19,200.19,0,0,0,136,128,8,8,0,0,0,128,120Zm0-32a40,40,0,0,0-40,40,8,8,0,0,0,16,0,24,24,0,0,1,48,0,214.09,214.09,0,0,1-20.51,92A8,8,0,1,0,146,226.83,230,230,0,0,0,168,128,40,40,0,0,0,128,88Zm0-64A104.11,104.11,0,0,0,24,128a87.76,87.76,0,0,1-5,29.33,8,8,0,0,0,15.09,5.33A103.9,103.9,0,0,0,40,128a88,88,0,0,1,176,0,282.24,282.24,0,0,1-5.29,54.45,8,8,0,0,0,6.3,9.4,8.22,8.22,0,0,0,1.55.15,8,8,0,0,0,7.84-6.45A298.37,298.37,0,0,0,232,128,104.12,104.12,0,0,0,128,24ZM94.4,152.17A8,8,0,0,0,85,158.42a151,151,0,0,1-17.21,45.44,8,8,0,0,0,13.86,8,166.67,166.67,0,0,0,19-50.25A8,8,0,0,0,94.4,152.17ZM128,56a72.85,72.85,0,0,0-9,.56,8,8,0,0,0,2,15.87A56.08,56.08,0,0,1,184,128a252.12,252.12,0,0,1-1.92,31A8,8,0,0,0,189,168a8.39,8.39,0,0,0,1,.06,8,8,0,0,0,7.92-7,266.48,266.48,0,0,0,2-33A72.08,72.08,0,0,0,128,56Zm57.93,128.25a8,8,0,0,0-9.75,5.75c-1.46,5.69-3.15,11.4-5,17a8,8,0,0,0,5,10.13,7.88,7.88,0,0,0,2.55.42,8,8,0,0,0,7.58-5.46c2-5.92,3.79-12,5.35-18.05A8,8,0,0,0,185.94,184.26Z"></path></svg>Quién tiene huella registrada en cada reloj</li>
+            <li><svg class="ic" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 256 256"><path d="M244.8,150.4a8,8,0,0,1-11.2-1.6A51.6,51.6,0,0,0,192,128a8,8,0,0,1-7.37-4.89,8,8,0,0,1,0-6.22A8,8,0,0,1,192,112a24,24,0,1,0-23.24-30,8,8,0,1,1-15.5-4A40,40,0,1,1,219,117.51a67.94,67.94,0,0,1,27.43,21.68A8,8,0,0,1,244.8,150.4ZM190.92,212a8,8,0,1,1-13.84,8,57,57,0,0,0-98.16,0,8,8,0,1,1-13.84-8,72.06,72.06,0,0,1,33.74-29.92,48,48,0,1,1,58.36,0A72.06,72.06,0,0,1,190.92,212ZM128,176a32,32,0,1,0-32-32A32,32,0,0,0,128,176ZM72,120a8,8,0,0,0-8-8A24,24,0,1,1,87.24,82a8,8,0,1,0,15.5-4A40,40,0,1,0,37,117.51,67.94,67.94,0,0,0,9.6,139.19a8,8,0,1,0,12.8,9.61A51.6,51.6,0,0,1,64,128,8,8,0,0,0,72,120Z"></path></svg>Copia a una persona a otros relojes</li>
+            <li><svg class="ic" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 256 256"><path d="M213.92,210.62a8,8,0,1,1-11.84,10.76l-52-57.15a60,60,0,0,0-57.41,7.24,8,8,0,1,1-9.42-12.93A75.43,75.43,0,0,1,128,144c1.28,0,2.55,0,3.82.1L104.9,114.49A108,108,0,0,0,61,135.31,8,8,0,0,1,49.73,134,8,8,0,0,1,51,122.77a124.27,124.27,0,0,1,41.71-21.66L69.37,75.4a155.43,155.43,0,0,0-40.29,24A8,8,0,0,1,18.92,87,171.87,171.87,0,0,1,58,62.86L42.08,45.38A8,8,0,1,1,53.92,34.62ZM128,192a12,12,0,1,0,12,12A12,12,0,0,0,128,192ZM237.08,87A172.3,172.3,0,0,0,106,49.4a8,8,0,1,0,2,15.87A158.33,158.33,0,0,1,128,64a156.25,156.25,0,0,1,98.92,35.37A8,8,0,0,0,237.08,87ZM195,135.31a8,8,0,0,0,11.24-1.3,8,8,0,0,0-1.3-11.24,124.25,124.25,0,0,0-51.73-24.2A8,8,0,1,0,150,114.24,108.12,108.12,0,0,1,195,135.31Z"></path></svg>Aviso si un conector deja de responder</li>
+          </ul>
+        </div>
+        <figure class="shot" style="margin:0"><img loading="lazy" src="/rrhh/capturas/relojes.jpg" width="2880" height="1800" alt="Seis relojes en tres sedes, todos en línea."></figure>
+      </div>
+
+      <div class="feature">
+        <div class="text">
+          <h3>Comportamiento: para conversar a tiempo.</h3>
+          <p>Quién falta seguido, quién falta los lunes o viernes, quién llega tarde repetidamente y quién mejoró. No para sancionar: para tomar decisiones con datos.</p>
+          <ul class="points">
+            <li><svg class="ic" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 256 256"><path d="M232,208a8,8,0,0,1-8,8H32a8,8,0,0,1-8-8V48a8,8,0,0,1,16,0V156.69l50.34-50.35a8,8,0,0,1,11.32,0L128,132.69,180.69,80H160a8,8,0,0,1,0-16h40a8,8,0,0,1,8,8v40a8,8,0,0,1-16,0V91.31l-58.34,58.35a8,8,0,0,1-11.32,0L96,123.31l-56,56V200H224A8,8,0,0,1,232,208Z"></path></svg>Señales claras por persona, sin gráficos que nadie entiende</li>
+            <li><svg class="ic" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 256 256"><path d="M128,64a40,40,0,1,0,40,40A40,40,0,0,0,128,64Zm0,64a24,24,0,1,1,24-24A24,24,0,0,1,128,128Zm0-112a88.1,88.1,0,0,0-88,88c0,31.4,14.51,64.68,42,96.25a254.19,254.19,0,0,0,41.45,38.3,8,8,0,0,0,9.18,0A254.19,254.19,0,0,0,174,200.25c27.45-31.57,42-64.85,42-96.25A88.1,88.1,0,0,0,128,16Zm0,206c-16.53-13-72-60.75-72-118a72,72,0,0,1,144,0C200,161.23,144.53,209,128,222Z"></path></svg>Por sede o por reloj</li>
+          </ul>
+        </div>
+        <figure class="shot" style="margin:0"><img loading="lazy" src="/rrhh/capturas/comportamiento.jpg" width="2880" height="1800" alt="Comportamiento de las personas en los últimos 30 días."></figure>
+      </div>
+
+      <div class="duo">
+        <div class="panel">
+          <h3>En el celular, sin instalar nada.</h3>
+          <p>El panel funciona en el navegador del teléfono. El gerente ve los atrasos de hoy desde donde esté.</p>
+          <div class="phone"><img loading="lazy" src="/rrhh/capturas/celular-inicio.jpg" width="1170" height="2532" alt="Inicio de Trueque HR en un celular."></div>
+        </div>
+        <div class="panel">
+          <h3>Enlazado con tu Odoo.</h3>
+          <p>La asistencia se queda en Trueque HR; Odoo recibe lo que necesita la nómina. Al registrar a alguien aquí, lo creas en Odoo con los campos que pide tu Odoo; con el plan Empresa, también su contrato.</p>
+          <div class="odoo-map">
+            <div class="node"><b>Trueque HR</b><ul><li>Relojes y marcaciones</li><li>Atrasos y horas extra</li><li>Vacaciones y permisos</li></ul></div>
+            <div class="link-arrow"><svg class="ic" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 256 256"><path d="M213.66,181.66l-32,32a8,8,0,0,1-11.32-11.32L188.69,184H48a8,8,0,0,1,0-16H188.69l-18.35-18.34a8,8,0,0,1,11.32-11.32l32,32A8,8,0,0,1,213.66,181.66Zm-139.32-64a8,8,0,0,0,11.32-11.32L67.31,88H208a8,8,0,0,0,0-16H67.31L85.66,53.66A8,8,0,0,0,74.34,42.34l-32,32a8,8,0,0,0,0,11.32Z"></path></svg></div>
+            <div class="node"><b>Odoo</b><ul><li>Empleados</li><li>Contratos de nómina</li><li>Décimos y fondos de reserva</li></ul></div>
+          </div>
+          <ul class="points" style="margin-top:20px">
+            <li><svg class="ic" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 256 256"><path d="M200,112a8,8,0,0,1-8,8H152a8,8,0,0,1,0-16h40A8,8,0,0,1,200,112Zm-8,24H152a8,8,0,0,0,0,16h40a8,8,0,0,0,0-16Zm40-80V200a16,16,0,0,1-16,16H40a16,16,0,0,1-16-16V56A16,16,0,0,1,40,40H216A16,16,0,0,1,232,56ZM216,200V56H40V200H216Zm-80.26-34a8,8,0,1,1-15.5,4c-2.63-10.26-13.06-18-24.25-18s-21.61,7.74-24.25,18a8,8,0,1,1-15.5-4,39.84,39.84,0,0,1,17.19-23.34,32,32,0,1,1,45.12,0A39.76,39.76,0,0,1,135.75,166ZM96,136a16,16,0,1,0-16-16A16,16,0,0,0,96,136Z"></path></svg>Enlaza a cada persona por cédula o por nombre</li>
+            <li><svg class="ic" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 256 256"><path d="M128,112a28,28,0,0,0-8,54.83V184a8,8,0,0,0,16,0V166.83A28,28,0,0,0,128,112Zm0,40a12,12,0,1,1,12-12A12,12,0,0,1,128,152Zm80-72H176V56a48,48,0,0,0-96,0V80H48A16,16,0,0,0,32,96V208a16,16,0,0,0,16,16H208a16,16,0,0,0,16-16V96A16,16,0,0,0,208,80ZM96,56a32,32,0,0,1,64,0V80H96ZM208,208H48V96H208V208Z"></path></svg>La clave de Odoo se guarda cifrada</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Cómo funciona -->
+  <section class="block" id="como-funciona">
+    <div class="wrap">
+      <p class="kicker">Cómo funciona</p>
+      <h2 class="title">Listo en una mañana, con los relojes que ya tienes.</h2>
+      <p class="intro">No hay que cambiar cables, comprar servidores ni pedir nada al proveedor de internet.</p>
+      <div class="flow">
+        <div class="step"><span class="n">01</span><h4><svg class="ic" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 256 256"><path d="M72,128a134.63,134.63,0,0,1-14.16,60.47,8,8,0,1,1-14.32-7.12A118.8,118.8,0,0,0,56,128,71.73,71.73,0,0,1,83,71.8,8,8,0,1,1,93,84.29,55.76,55.76,0,0,0,72,128Zm56-8a8,8,0,0,0-8,8,184.12,184.12,0,0,1-23,89.1,8,8,0,0,0,14,7.76A200.19,200.19,0,0,0,136,128,8,8,0,0,0,128,120Zm0-32a40,40,0,0,0-40,40,8,8,0,0,0,16,0,24,24,0,0,1,48,0,214.09,214.09,0,0,1-20.51,92A8,8,0,1,0,146,226.83,230,230,0,0,0,168,128,40,40,0,0,0,128,88Zm0-64A104.11,104.11,0,0,0,24,128a87.76,87.76,0,0,1-5,29.33,8,8,0,0,0,15.09,5.33A103.9,103.9,0,0,0,40,128a88,88,0,0,1,176,0,282.24,282.24,0,0,1-5.29,54.45,8,8,0,0,0,6.3,9.4,8.22,8.22,0,0,0,1.55.15,8,8,0,0,0,7.84-6.45A298.37,298.37,0,0,0,232,128,104.12,104.12,0,0,0,128,24ZM94.4,152.17A8,8,0,0,0,85,158.42a151,151,0,0,1-17.21,45.44,8,8,0,0,0,13.86,8,166.67,166.67,0,0,0,19-50.25A8,8,0,0,0,94.4,152.17ZM128,56a72.85,72.85,0,0,0-9,.56,8,8,0,0,0,2,15.87A56.08,56.08,0,0,1,184,128a252.12,252.12,0,0,1-1.92,31A8,8,0,0,0,189,168a8.39,8.39,0,0,0,1,.06,8,8,0,0,0,7.92-7,266.48,266.48,0,0,0,2-33A72.08,72.08,0,0,0,128,56Zm57.93,128.25a8,8,0,0,0-9.75,5.75c-1.46,5.69-3.15,11.4-5,17a8,8,0,0,0,5,10.13,7.88,7.88,0,0,0,2.55.42,8,8,0,0,0,7.58-5.46c2-5.92,3.79-12,5.35-18.05A8,8,0,0,0,185.94,184.26Z"></path></svg>Tus relojes</h4><p>Siguen en su sitio. Las personas marcan con huella, rostro o tarjeta, como siempre.</p></div>
+        <div class="step"><span class="n">02</span><h4><svg class="ic" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 256 256"><path d="M208,40H48A24,24,0,0,0,24,64V176a24,24,0,0,0,24,24h72v16H96a8,8,0,0,0,0,16h64a8,8,0,0,0,0-16H136V200h72a24,24,0,0,0,24-24V64A24,24,0,0,0,208,40ZM48,56H208a8,8,0,0,1,8,8v80H40V64A8,8,0,0,1,48,56ZM208,184H48a8,8,0,0,1-8-8V160H216v16A8,8,0,0,1,208,184Z"></path></svg>El conector</h4><p>Se instala en 5 minutos en una PC de cada sede. Encuentra los relojes de la red solo.</p></div>
+        <div class="step"><span class="n">03</span><h4><svg class="ic" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 256 256"><path d="M160,40A88.09,88.09,0,0,0,81.29,88.67,64,64,0,1,0,72,216h88a88,88,0,0,0,0-176Zm0,160H72a48,48,0,0,1,0-96c1.1,0,2.2,0,3.29.11A88,88,0,0,0,72,128a8,8,0,0,0,16,0,72,72,0,1,1,72,72Zm37.66-93.66a8,8,0,0,1,0,11.32l-48,48a8,8,0,0,1-11.32,0l-24-24a8,8,0,0,1,11.32-11.32L144,148.69l42.34-42.35A8,8,0,0,1,197.66,106.34Z"></path></svg>La nube</h4><p>Las marcaciones llegan al panel; con la conexión en vivo, en segundos. Si se va el internet, el reloj las guarda y llegan al volver.</p></div>
+        <div class="step"><span class="n">04</span><h4><svg class="ic" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 256 256"><path d="M176,16H80A24,24,0,0,0,56,40V216a24,24,0,0,0,24,24h96a24,24,0,0,0,24-24V40A24,24,0,0,0,176,16ZM72,64H184V192H72Zm8-32h96a8,8,0,0,1,8,8v8H72V40A8,8,0,0,1,80,32Zm96,192H80a8,8,0,0,1-8-8v-8H184v8A8,8,0,0,1,176,224Z"></path></svg>Tu equipo</h4><p>RR. HH., jefes de sede y gerencia entran desde el navegador, cada uno con lo suyo.</p></div>
+      </div>
+      <p class="note"><svg class="ic" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 256 256"><path d="M208,40H48A16,16,0,0,0,32,56v56c0,52.72,25.52,84.67,46.93,102.19,23.06,18.86,46,25.26,47,25.53a8,8,0,0,0,4.2,0c1-.27,23.91-6.67,47-25.53C198.48,196.67,224,164.72,224,112V56A16,16,0,0,0,208,40Zm0,72c0,37.07-13.66,67.16-40.6,89.42A129.3,129.3,0,0,1,128,223.62a128.25,128.25,0,0,1-38.92-21.81C61.82,179.51,48,149.3,48,112l0-56,160,0ZM82.34,141.66a8,8,0,0,1,11.32-11.32L112,148.69l50.34-50.35a8,8,0,0,1,11.32,11.32l-56,56a8,8,0,0,1-11.32,0Z"></path></svg>Las huellas nunca salen del reloj. La plataforma solo sabe qué dedos tiene registrados cada persona.</p>
+      <p class="note"><svg class="ic" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 256 256"><path d="M72,128a134.63,134.63,0,0,1-14.16,60.47,8,8,0,1,1-14.32-7.12A118.8,118.8,0,0,0,56,128,71.73,71.73,0,0,1,83,71.8,8,8,0,1,1,93,84.29,55.76,55.76,0,0,0,72,128Zm56-8a8,8,0,0,0-8,8,184.12,184.12,0,0,1-23,89.1,8,8,0,0,0,14,7.76A200.19,200.19,0,0,0,136,128,8,8,0,0,0,128,120Zm0-32a40,40,0,0,0-40,40,8,8,0,0,0,16,0,24,24,0,0,1,48,0,214.09,214.09,0,0,1-20.51,92A8,8,0,1,0,146,226.83,230,230,0,0,0,168,128,40,40,0,0,0,128,88Zm0-64A104.11,104.11,0,0,0,24,128a87.76,87.76,0,0,1-5,29.33,8,8,0,0,0,15.09,5.33A103.9,103.9,0,0,0,40,128a88,88,0,0,1,176,0,282.24,282.24,0,0,1-5.29,54.45,8,8,0,0,0,6.3,9.4,8.22,8.22,0,0,0,1.55.15,8,8,0,0,0,7.84-6.45A298.37,298.37,0,0,0,232,128,104.12,104.12,0,0,0,128,24ZM94.4,152.17A8,8,0,0,0,85,158.42a151,151,0,0,1-17.21,45.44,8,8,0,0,0,13.86,8,166.67,166.67,0,0,0,19-50.25A8,8,0,0,0,94.4,152.17ZM128,56a72.85,72.85,0,0,0-9,.56,8,8,0,0,0,2,15.87A56.08,56.08,0,0,1,184,128a252.12,252.12,0,0,1-1.92,31A8,8,0,0,0,189,168a8.39,8.39,0,0,0,1,.06,8,8,0,0,0,7.92-7,266.48,266.48,0,0,0,2-33A72.08,72.08,0,0,0,128,56Zm57.93,128.25a8,8,0,0,0-9.75,5.75c-1.46,5.69-3.15,11.4-5,17a8,8,0,0,0,5,10.13,7.88,7.88,0,0,0,2.55.42,8,8,0,0,0,7.58-5.46c2-5.92,3.79-12,5.35-18.05A8,8,0,0,0,185.94,184.26Z"></path></svg>Relojes ZKTeco con conexión de red. Probado con el MB10-VL; si tienes otro modelo, lo probamos contigo antes de contratar.</p>
+    </div>
+  </section>
+
+  <!-- Planes -->
+  <section class="block" id="planes">
+    <div class="wrap">
+      <p class="kicker">Planes</p>
+      <h2 class="title">Menos de un dólar al mes por persona.</h2>
+      <p class="intro">Pago anual o mensual, en dólares y con factura. Cambian los límites, y el plan Empresa suma contratos de nómina, roles por usuario y conexión en vivo.</p>
+      <div class="plans" id="plans"></div>
+      <p class="note">Al contratar cualquier plan aceptas los <a class="legal-link" href="#terminos" data-terms>términos y condiciones</a> y el tratamiento de datos que describen.</p>
+      <div class="custom"><span>¿Más de 300 personas, 30 relojes o 15 sedes? Armamos un plan a tu medida.</span><a class="btn btn-line" data-contact="Hola, necesito un plan a medida de Trueque HR." href="#contacto">Pedir cotización</a></div>
+
+      <ul class="all" aria-label="Incluido en todos los planes">
+        <li><svg class="ic" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 256 256"><path d="M232.49,80.49l-128,128a12,12,0,0,1-17,0l-56-56a12,12,0,1,1,17-17L96,183,215.51,63.51a12,12,0,0,1,17,17Z"></path></svg>Inicio con atrasos y quién no ha marcado</li>
+        <li><svg class="ic" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 256 256"><path d="M232.49,80.49l-128,128a12,12,0,0,1-17,0l-56-56a12,12,0,1,1,17-17L96,183,215.51,63.51a12,12,0,0,1,17,17Z"></path></svg>Vista de horas por persona</li>
+        <li><svg class="ic" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 256 256"><path d="M232.49,80.49l-128,128a12,12,0,0,1-17,0l-56-56a12,12,0,1,1,17-17L96,183,215.51,63.51a12,12,0,0,1,17,17Z"></path></svg>Aviso de atrasos</li>
+        <li><svg class="ic" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 256 256"><path d="M232.49,80.49l-128,128a12,12,0,0,1-17,0l-56-56a12,12,0,1,1,17-17L96,183,215.51,63.51a12,12,0,0,1,17,17Z"></path></svg>Horarios con tolerancia y almuerzo</li>
+        <li><svg class="ic" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 256 256"><path d="M232.49,80.49l-128,128a12,12,0,0,1-17,0l-56-56a12,12,0,1,1,17-17L96,183,215.51,63.51a12,12,0,0,1,17,17Z"></path></svg>Horas extra al 50 % y 100 %</li>
+        <li><svg class="ic" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 256 256"><path d="M232.49,80.49l-128,128a12,12,0,0,1-17,0l-56-56a12,12,0,1,1,17-17L96,183,215.51,63.51a12,12,0,0,1,17,17Z"></path></svg>Vacaciones y permisos con saldo</li>
+        <li><svg class="ic" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 256 256"><path d="M232.49,80.49l-128,128a12,12,0,0,1-17,0l-56-56a12,12,0,1,1,17-17L96,183,215.51,63.51a12,12,0,0,1,17,17Z"></path></svg>Feriados nacionales de Ecuador</li>
+        <li><svg class="ic" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 256 256"><path d="M232.49,80.49l-128,128a12,12,0,0,1-17,0l-56-56a12,12,0,1,1,17-17L96,183,215.51,63.51a12,12,0,0,1,17,17Z"></path></svg>Excel de cualquier periodo</li>
+        <li><svg class="ic" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 256 256"><path d="M232.49,80.49l-128,128a12,12,0,0,1-17,0l-56-56a12,12,0,1,1,17-17L96,183,215.51,63.51a12,12,0,0,1,17,17Z"></path></svg>Personas en los relojes desde la web</li>
+        <li><svg class="ic" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 256 256"><path d="M232.49,80.49l-128,128a12,12,0,0,1-17,0l-56-56a12,12,0,1,1,17-17L96,183,215.51,63.51a12,12,0,0,1,17,17Z"></path></svg>Empleados con cédula validada</li>
+        <li><svg class="ic" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 256 256"><path d="M232.49,80.49l-128,128a12,12,0,0,1-17,0l-56-56a12,12,0,1,1,17-17L96,183,215.51,63.51a12,12,0,0,1,17,17Z"></path></svg>Filtro por sede y por reloj</li>
+        <li><svg class="ic" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 256 256"><path d="M232.49,80.49l-128,128a12,12,0,0,1-17,0l-56-56a12,12,0,1,1,17-17L96,183,215.51,63.51a12,12,0,0,1,17,17Z"></path></svg>Comportamiento por persona</li>
+        <li><svg class="ic" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 256 256"><path d="M232.49,80.49l-128,128a12,12,0,0,1-17,0l-56-56a12,12,0,1,1,17-17L96,183,215.51,63.51a12,12,0,0,1,17,17Z"></path></svg>Verificación en dos pasos</li>
+        <li><svg class="ic" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 256 256"><path d="M232.49,80.49l-128,128a12,12,0,0,1-17,0l-56-56a12,12,0,1,1,17-17L96,183,215.51,63.51a12,12,0,0,1,17,17Z"></path></svg>Registro de cambios de todo</li>
+        <li><svg class="ic" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 256 256"><path d="M232.49,80.49l-128,128a12,12,0,0,1-17,0l-56-56a12,12,0,1,1,17-17L96,183,215.51,63.51a12,12,0,0,1,17,17Z"></path></svg>Soporte en español desde Ecuador</li>
+      </ul>
+
+      <table class="svc" aria-label="Servicios opcionales">
+        <thead><tr><th>Servicios opcionales</th><th class="t">Tiempo</th><th>Precio (más IVA)</th></tr></thead>
+        <tbody>
+          <tr><td>Instalación remota del conector, por sede</td><td class="t">30 min</td><td class="num">$35</td></tr>
+          <tr><td>Puesta en marcha: empleados, horarios y relojes</td><td class="t">hasta 3 h</td><td class="num">$180</td></tr>
+          <tr><td>Capacitación en línea para tu equipo</td><td class="t">1 h 30 min</td><td class="num">$90</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- Preguntas -->
+  <section class="block" id="preguntas">
+    <div class="wrap">
+      <p class="kicker">Preguntas frecuentes</p>
+      <h2 class="title">Lo que nos preguntan antes de empezar.</h2>
+      <div class="faq">
+        <details><summary>¿Tengo que cambiar mis relojes?<svg class="ic" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 256 256"><path d="M213.66,101.66l-80,80a8,8,0,0,1-11.32,0l-80-80A8,8,0,0,1,53.66,90.34L128,164.69l74.34-74.35a8,8,0,0,1,11.32,11.32Z"></path></svg></summary><p>No. Funciona con los relojes ZKTeco que tienen conexión de red. Si tienes otro modelo, lo probamos contigo antes de que contrates.</p></details>
+        <details><summary>¿Necesito IP pública, abrir puertos o un servidor?<svg class="ic" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 256 256"><path d="M213.66,101.66l-80,80a8,8,0,0,1-11.32,0l-80-80A8,8,0,0,1,53.66,90.34L128,164.69l74.34-74.35a8,8,0,0,1,11.32,11.32Z"></path></svg></summary><p>No. El conector se instala en una PC que ya esté en la oficina y la conexión sale desde ahí hacia la nube, igual que un navegador. Para varias sedes, un conector en cada una.</p></details>
+        <details><summary>¿Qué pasa si se va el internet o se apaga la PC?<svg class="ic" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 256 256"><path d="M213.66,101.66l-80,80a8,8,0,0,1-11.32,0l-80-80A8,8,0,0,1,53.66,90.34L128,164.69l74.34-74.35a8,8,0,0,1,11.32,11.32Z"></path></svg></summary><p>El reloj sigue guardando las marcaciones como siempre. Cuando vuelve la conexión, el conector las sube y nada se pierde ni se duplica. Si un conector deja de responder, el panel te avisa.</p></details>
+        <details><summary>¿Las huellas de mis empleados salen del reloj?<svg class="ic" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 256 256"><path d="M213.66,101.66l-80,80a8,8,0,0,1-11.32,0l-80-80A8,8,0,0,1,53.66,90.34L128,164.69l74.34-74.35a8,8,0,0,1,11.32,11.32Z"></path></svg></summary><p>No. Las huellas y los rostros se quedan en el reloj. La plataforma solo sabe qué dedos tiene registrados cada persona. Las claves se guardan cifradas. Lo explicamos en los <a class="legal-link" href="#terminos" data-terms>términos y condiciones</a>.</p></details>
+        <details><summary>¿Calcula las horas extra y las vacaciones según la ley?<svg class="ic" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 256 256"><path d="M213.66,101.66l-80,80a8,8,0,0,1-11.32,0l-80-80A8,8,0,0,1,53.66,90.34L128,164.69l74.34-74.35a8,8,0,0,1,11.32,11.32Z"></path></svg></summary><p>Sí. Separa las horas extra al 50 % (lunes a viernes) y al 100 % (sábado, domingo y feriados) según el art. 55, y calcula las vacaciones con los 15 días por año y los días por antigüedad del art. 69. Tu empresa ajusta lo que la ley deja a su criterio, como el tope de horas de permiso.</p></details>
+        <details><summary>¿Funciona con Odoo?<svg class="ic" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 256 256"><path d="M213.66,101.66l-80,80a8,8,0,0,1-11.32,0l-80-80A8,8,0,0,1,53.66,90.34L128,164.69l74.34-74.35a8,8,0,0,1,11.32,11.32Z"></path></svg></summary><p>Sí. Se conecta con tu Odoo para los empleados y los contratos de nómina; la asistencia se queda en Trueque HR. Los empleados se enlazan desde el plan Profesional, y los contratos de nómina con el plan Empresa.</p></details>
+        <details><summary>¿Puedo verlo antes de pagar?<svg class="ic" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 256 256"><path d="M213.66,101.66l-80,80a8,8,0,0,1-11.32,0l-80-80A8,8,0,0,1,53.66,90.34L128,164.69l74.34-74.35a8,8,0,0,1,11.32,11.32Z"></path></svg></summary><p>Sí. Te mostramos una demo con una empresa de ejemplo y, si quieres, la conectamos a uno de tus relojes para que veas tus propios datos.</p></details>
+        <details><summary>¿Cómo se paga?<svg class="ic" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 256 256"><path d="M213.66,101.66l-80,80a8,8,0,0,1-11.32,0l-80-80A8,8,0,0,1,53.66,90.34L128,164.69l74.34-74.35a8,8,0,0,1,11.32,11.32Z"></path></svg></summary><p>En dólares, por transferencia, con factura. Pago anual (te ahorras dos meses) o mensual. Puedes cambiar de plan cuando crezca tu empresa.</p></details>
+      </div>
+    </div>
+  </section>
+
+  <!-- Cierre -->
+  <section class="block" id="contacto">
+    <div class="wrap closing">
+      <div>
+        <p class="kicker">Empecemos</p>
+        <h2 class="title">¿Lo vemos con tus relojes?</h2>
+        <p class="intro">Escríbenos y en una llamada corta te mostramos el panel con tus sedes y relojes. Sin compromiso.</p>
+      </div>
+      <div class="hero-cta">
+        <a class="btn btn-primary btn-lg" data-contact="Hola, quiero ver una demo de Trueque HR con mis relojes." href="#contacto"><svg class="ic" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 256 256"><path d="M187.58,144.84l-32-16a8,8,0,0,0-8,.5l-14.69,9.8a40.55,40.55,0,0,1-16-16l9.8-14.69a8,8,0,0,0,.5-8l-16-32A8,8,0,0,0,104,64a40,40,0,0,0-40,40,88.1,88.1,0,0,0,88,88,40,40,0,0,0,40-40A8,8,0,0,0,187.58,144.84ZM152,176a72.08,72.08,0,0,1-72-72A24,24,0,0,1,99.29,80.46l11.48,23L101,118a8,8,0,0,0-.73,7.51,56.47,56.47,0,0,0,30.15,30.15A8,8,0,0,0,138,155l14.61-9.74,23,11.48A24,24,0,0,1,152,176ZM128,24A104,104,0,0,0,36.18,176.88L24.83,210.93a16,16,0,0,0,20.24,20.24l34.05-11.35A104,104,0,1,0,128,24Zm0,192a87.87,87.87,0,0,1-44.06-11.81,8,8,0,0,0-6.54-.67L40,216,52.47,178.6a8,8,0,0,0-.66-6.54A88,88,0,1,1,128,216Z"></path></svg>Escribir por WhatsApp</a>
+        <a class="btn btn-line btn-lg" href="https://trueque.172-235-136-212.sslip.io/"><svg class="ic" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 256 256"><path d="M141.66,133.66l-40,40a8,8,0,0,1-11.32-11.32L116.69,136H24a8,8,0,0,1,0-16h92.69L90.34,93.66a8,8,0,0,1,11.32-11.32l40,40A8,8,0,0,1,141.66,133.66ZM200,32H136a8,8,0,0,0,0,16h56V208H136a8,8,0,0,0,0,16h64a8,8,0,0,0,8-8V40A8,8,0,0,0,200,32Z"></path></svg>Entrar al panel</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="owner">
+      <img src="/rrhh/marca/somos-trueque.png" width="1280" height="416" alt="Somos Trueque" loading="lazy">
+      <span class="made"><span class="flagbar" aria-hidden="true"><i></i><i></i><i></i></span>Trueque Corp S.A.S. · Hecho en Cuenca, Ecuador</span>
+    </div>
+    <nav aria-label="Pie de página"><a href="#calculadora">Calculadora</a><a href="#planes">Planes</a><a href="#preguntas">Preguntas</a><a href="#terminos" data-terms>Términos y condiciones</a><a href="https://trueque.172-235-136-212.sslip.io/">Entrar</a></nav>
+  </div>
+</footer>
+
+<dialog class="terms" id="terminos" aria-labelledby="terms-title">
+  <div class="terms-head">
+    <div>
+      <h2 id="terms-title">Términos y condiciones de Trueque HR</h2>
+      <p>Versión 1 · vigente desde el 22 de octubre de 2026</p>
+    </div>
+    <button class="x" type="button" data-close aria-label="Cerrar">&times;</button>
+  </div>
+  <div class="terms-body">
+    <h3>1. Quiénes somos y qué aceptas</h3>
+    <p>Trueque HR es un servicio de Trueque Corp S.A.S., compañía constituida en Ecuador con domicilio en Cuenca ("Trueque"). Estos términos regulan el uso de la plataforma Trueque HR, su panel web y el programa conector, por parte de la empresa que contrata el servicio ("el Cliente") y de las personas a las que el Cliente da acceso ("los usuarios"). Al contratar, crear una cuenta o usar el servicio, el Cliente acepta estos términos.</p>
+
+    <h3>2. El servicio</h3>
+    <p>Trueque HR reúne las marcaciones de los relojes biométricos del Cliente y calcula su asistencia: atrasos, faltas, horas trabajadas, horas extra, vacaciones, permisos y reportes. Incluye un panel en la nube y un programa conector que el Cliente instala en una computadora de cada sede. Las funciones y límites (empleados, relojes, sedes) dependen del plan contratado. Los servicios opcionales (instalación, puesta en marcha, capacitación) se cobran aparte.</p>
+
+    <h3>3. Cuentas, usuarios y seguridad</h3>
+    <ul>
+      <li>El Cliente decide quién usa el panel y con qué rol, y es responsable de lo que hagan sus usuarios.</li>
+      <li>Cada usuario debe cuidar su clave y no compartirla. Recomendamos activar la verificación en dos pasos.</li>
+      <li>El Cliente debe avisarnos de inmediato si sospecha de un acceso no autorizado. Toda acción importante queda en el registro de cambios del panel.</li>
+    </ul>
+
+    <h3>4. Datos personales y datos biométricos</h3>
+    <p><strong>Roles.</strong> Para efectos de la Ley Orgánica de Protección de Datos Personales del Ecuador y su reglamento, el Cliente es el <em>responsable del tratamiento</em> de los datos de sus trabajadores: decide para qué se usan (control de asistencia, gestión del personal, nómina). Trueque actúa como <em>encargado del tratamiento</em>: trata esos datos solo por cuenta del Cliente, según sus instrucciones y para prestar el servicio.</p>
+    <p><strong>Datos biométricos.</strong> La huella, el rostro y otros rasgos biométricos son datos sensibles. Por la forma en que funciona el servicio:</p>
+    <ul>
+      <li>Las huellas, los rostros y sus plantillas se registran y se guardan en los relojes del Cliente. Trueque HR <strong>no recibe, no copia y no almacena</strong> huellas, rostros ni plantillas biométricas.</li>
+      <li>La plataforma solo conoce el PIN y el nombre con que cada persona está en el reloj, qué dedos tiene registrados (el número del dedo, no la huella) y sus marcaciones (fecha, hora y reloj).</li>
+    </ul>
+    <p><strong>Obligaciones del Cliente.</strong> Antes de registrar a una persona en un reloj, el Cliente debe informarle la finalidad y obtener su consentimiento explícito, o contar con otra base legal válida; ofrecer un medio alternativo de marcación a quien no pueda o no quiera usar su biometría cuando la ley lo exija; registrar solo los datos necesarios (por ejemplo, en enfermedades, lo mínimo para justificar la ausencia) y atender los pedidos de acceso, rectificación, eliminación, oposición y portabilidad de sus trabajadores. Trueque ayudará al Cliente a cumplir esos pedidos con las herramientas del panel.</p>
+    <p><strong>Otros datos que guarda la plataforma:</strong> nombre, cédula, cargo, sede, correo y teléfono de trabajo, fecha de ingreso, horario, marcaciones, novedades (vacaciones, permisos, licencias) y los datos de los usuarios del panel.</p>
+    <p><strong>Seguridad.</strong> Usamos conexiones cifradas, guardamos cifradas las claves de los relojes y de Odoo, limitamos el acceso por roles y sedes, y llevamos un registro de cambios que no se puede editar ni borrar. Nuestro personal está obligado a guardar confidencialidad.</p>
+    <p><strong>Proveedores.</strong> El Cliente autoriza a Trueque a usar proveedores de infraestructura en la nube para alojar el servicio, que pueden estar fuera del Ecuador, con garantías de seguridad y confidencialidad equivalentes a estas.</p>
+    <p><strong>Incidentes.</strong> Si Trueque conoce una vulneración de seguridad que afecte datos del Cliente, le avisará sin demora indebida, con la información disponible, para que el Cliente pueda notificar a la autoridad y a los titulares en los plazos de la ley.</p>
+    <p><strong>Uso de los datos.</strong> Trueque no vende ni cede los datos del Cliente ni los usa para fines propios. Solo puede usar información agregada y anónima para mantener y mejorar el servicio.</p>
+    <p><strong>Al terminar.</strong> El Cliente puede descargar su información (Excel) durante los 30 días siguientes al fin del servicio. Después la eliminamos, salvo lo que la ley obligue a conservar.</p>
+
+    <h3>5. Los cálculos son una ayuda, no un dictamen</h3>
+    <p>Los atrasos, faltas, horas extra, vacaciones y demás resultados se calculan con las marcaciones que entregan los relojes y con los horarios, tolerancias, novedades y reglas que configura el Cliente. La plataforma aplica criterios del Código del Trabajo como referencia, pero no es asesoría legal ni laboral. El Cliente debe revisar los resultados antes de pagar, descontar o sancionar, y es el único responsable de sus decisiones laborales y de nómina. La hora de cada marcación es la del reloj: el Cliente debe mantener sus relojes con la hora correcta. Las marcaciones originales nunca se modifican.</p>
+
+    <h3>6. Equipos, conexión y conector</h3>
+    <ul>
+      <li>Los relojes, la computadora donde corre el conector, la red local, la energía eléctrica y el internet son del Cliente y están bajo su responsabilidad.</li>
+      <li>El servicio funciona con relojes ZKTeco con conexión de red. Otros modelos deben probarse antes.</li>
+      <li>Si se corta la conexión, las marcaciones quedan en el reloj y se suben cuando vuelve, siempre que la memoria del reloj no se haya llenado ni se hayan borrado.</li>
+      <li>Trueque no responde por fallas, daños o desconfiguración de los equipos del Cliente ni por cortes de luz o internet.</li>
+    </ul>
+
+    <h3>7. Disponibilidad y soporte</h3>
+    <p>Trabajamos para que el servicio esté disponible todo el tiempo, salvo mantenimientos, que avisaremos con anticipación cuando sea posible, y causas fuera de nuestro control. El soporte se presta en español, de lunes a viernes en horario de oficina de Ecuador, por los canales publicados en esta página.</p>
+
+    <h3>8. Precios, pagos y renovación</h3>
+    <ul>
+      <li>Los precios están en dólares de los Estados Unidos y no incluyen IVA. Se pagan por adelantado, anual o mensualmente, con factura electrónica.</li>
+      <li>La suscripción se renueva por el mismo periodo, salvo que el Cliente avise lo contrario al menos 15 días antes del vencimiento.</li>
+      <li>Si un pago se atrasa más de 15 días, Trueque puede suspender el acceso con aviso previo. Los datos se conservan durante la suspensión.</li>
+      <li>Si la empresa supera los límites de su plan, propondremos el cambio de plan que corresponda. Los cambios de precio se avisan con 30 días de anticipación.</li>
+      <li>Lo pagado por un periodo ya iniciado no se devuelve, salvo que la ley disponga otra cosa.</li>
+    </ul>
+
+    <h3>9. Uso permitido</h3>
+    <p>El servicio es para el control de asistencia y la gestión del personal del Cliente. No está permitido usarlo para vigilar a personas con fines distintos o ilegales, registrar datos sin base legal, intentar acceder a información de otras empresas, copiar, descompilar o revender el software, ni afectar el funcionamiento del servicio. Trueque puede suspender el acceso ante un uso indebido grave.</p>
+
+    <h3>10. Integraciones con terceros (Odoo)</h3>
+    <p>La conexión con Odoo u otros sistemas es opcional y la activa el Cliente con sus propias credenciales, que guardamos cifradas. Trueque envía y lee en ese sistema solo lo que el Cliente pide (empleados y contratos de nómina) y no responde por el funcionamiento, la disponibilidad ni los datos de ese sistema de terceros.</p>
+
+    <h3>11. Propiedad</h3>
+    <p>El software, el conector, el diseño y la marca Trueque HR son de Trueque Corp S.A.S. El Cliente recibe una licencia de uso no exclusiva e intransferible mientras dure su suscripción. Los datos del Cliente son del Cliente.</p>
+
+    <h3>12. Límite de responsabilidad</h3>
+    <p>En la medida que la ley lo permita, la responsabilidad total de Trueque frente al Cliente se limita al valor que el Cliente pagó por el servicio en los 12 meses anteriores al hecho que la origina. Trueque no responde por daños indirectos, lucro cesante, pérdida de oportunidades, multas o reclamos laborales derivados de configuraciones, datos o decisiones del Cliente, ni por fallas de equipos, redes o servicios de terceros. Esta limitación no aplica en casos de dolo o culpa grave.</p>
+
+    <h3>13. Plazo y terminación</h3>
+    <p>El Cliente puede cancelar cuando quiera; el servicio sigue activo hasta el fin del periodo pagado. Cualquiera de las partes puede terminar el servicio si la otra incumple gravemente estos términos y no lo corrige dentro de 15 días de recibir el aviso.</p>
+
+    <h3>14. Cambios a estos términos</h3>
+    <p>Podemos actualizar estos términos. Los cambios importantes se avisarán con al menos 30 días de anticipación; si el Cliente no está de acuerdo, puede cancelar antes de que entren en vigencia.</p>
+
+    <h3>15. Ley y controversias</h3>
+    <p>Estos términos se rigen por las leyes de la República del Ecuador. Las partes intentarán resolver cualquier diferencia de buena fe y mediante mediación; si no hay acuerdo, la someterán a los jueces competentes de la ciudad de Cuenca.</p>
+
+    <h3>Modelo de aviso y consentimiento para los trabajadores</h3>
+    <p>El Cliente puede usar o adaptar este texto, firmado por cada trabajador antes de registrarlo en el reloj:</p>
+    <div class="box"><p>"Yo, ______, con cédula ______, autorizo a ______ (empleador) a registrar mi huella dactilar o rostro en sus relojes biométricos con la única finalidad de controlar mi asistencia y jornada de trabajo. Sé que mi dato biométrico se guarda en el reloj y no en sistemas externos; que la empresa registra mi nombre, PIN y la fecha y hora de mis marcaciones; y que puedo pedir acceso, rectificación o eliminación de mis datos, así como un medio alternativo de marcación, en los términos de la Ley Orgánica de Protección de Datos Personales. Fecha y firma: ______."</p></div>
+  </div>
+</dialog>
+<template id="check-icon"><svg class="ic" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 256 256"><path d="M232.49,80.49l-128,128a12,12,0,0,1-17,0l-56-56a12,12,0,1,1,17-17L96,183,215.51,63.51a12,12,0,0,1,17,17Z"></path></svg></template>
+<script>
+  // --- Datos que se cambian aquí ---------------------------------------------------------------
+  // Número de WhatsApp de ventas con código de país y sin "+" (por ejemplo 593991234567).
+  const WHATSAPP = '593996145553';
+  // Precios anuales en dólares, sin IVA. El pago mensual es el anual dividido para 10 (dos meses gratis al pagar el año).
+  // full: contratos de nómina en Odoo, roles por usuario y conexión en vivo (solo el plan Empresa).
+  const PLANS = [
+    { name: 'Inicial', employees: 25, clocks: 1, sites: 1, year: 149, odoo: false },
+    { name: 'Estándar', employees: 50, clocks: 3, sites: 2, year: 279, odoo: false },
+    { name: 'Profesional', employees: 150, clocks: 7, sites: 3, year: 489, odoo: true, popular: true },
+    { name: 'Empresa', employees: 300, clocks: 30, sites: 15, year: 1290, odoo: true, full: true },
+  ];
+  const IVA = 0.15;
+  // ------------------------------------------------------------------------------------------------
+
+  const CHECK = document.getElementById('check-icon').innerHTML;
+  const REDUCE = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const DASH = '<svg class="ic" aria-hidden="true" viewBox="0 0 256 256" fill="currentColor"><rect x="56" y="120" width="144" height="16" rx="8"/></svg>';
+  const usd = (n, d = 0) => '$' + n.toLocaleString('es-EC', { minimumFractionDigits: d, maximumFractionDigits: d });
+  const usd2 = (n) => usd(n, Number.isInteger(n) ? 0 : 2);
+  const contactUrl = (text) => (WHATSAPP ? `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(text)}` : '#contacto');
+
+  // Botones de contacto: con número van a WhatsApp con el mensaje listo.
+  for (const a of document.querySelectorAll('[data-contact]')) {
+    a.href = contactUrl(a.dataset.contact);
+    if (WHATSAPP) { a.target = '_blank'; a.rel = 'noopener'; }
+  }
+
+  // Tarjetas de planes
+  const item = (on, text) => `<li class="${on ? '' : 'off'}">${on ? CHECK : DASH}${text}</li>`;
+  document.getElementById('plans').innerHTML = PLANS.map((p) => `
+    <div class="plan${p.popular ? ' pop' : ''}${p.full ? ' top' : ''}">
+      <h4>${p.name}${p.popular ? '<span class="tag">Más elegido</span>' : ''}</h4>
+      <p class="amount">${usd(p.year)} <small>al año</small></p>
+      <p class="month">o ${usd2(Math.round((p.year / 10) * 100) / 100)} al mes</p>
+      ${p.full ? '<p class="extra">Todo incluido</p>' : ''}
+      <ul>
+        ${item(true, `Hasta ${p.employees} empleados`)}
+        ${item(true, `${p.clocks} ${p.clocks === 1 ? 'reloj' : 'relojes'}`)}
+        ${item(true, `${p.sites} ${p.sites === 1 ? 'sede' : 'sedes'}`)}
+        ${item(p.odoo, p.odoo ? 'Empleados en Odoo' : 'Enlace con Odoo')}
+        ${item(p.full, 'Contratos de nómina en Odoo')}
+        ${item(p.full, 'Roles por usuario')}
+        ${item(p.full, 'Conexión en vivo')}
+      </ul>
+      <a class="btn ${p.popular ? 'btn-blue' : p.full ? 'btn-green' : 'btn-line'}" href="${contactUrl(`Hola, me interesa el plan ${p.name} de Trueque HR.`)}"${WHATSAPP ? ' target="_blank" rel="noopener"' : ''}>Quiero este plan</a>
+    </div>`).join('');
+
+  // Calculadora
+  const $ = (id) => document.getElementById(id);
+  const inputs = { emp: $('emp'), clk: $('clk'), sit: $('sit') };
+  let billing = 'year';
+
+  function paint(input) {
+    const p = ((input.value - input.min) / (input.max - input.min)) * 100;
+    input.style.setProperty('--p', p + '%');
+  }
+
+  function update() {
+    const emp = Number(inputs.emp.value), clk = Number(inputs.clk.value), sit = Number(inputs.sit.value);
+    $('emp-out').textContent = emp >= 400 ? '400+' : emp;
+    $('clk-out').textContent = clk >= 40 ? '40+' : clk;
+    $('sit-out').textContent = sit >= 20 ? '20+' : sit;
+    Object.values(inputs).forEach(paint);
+    const wantsOdoo = $('odoo').checked;
+    // Odoo viene desde el plan Profesional: si lo pide, se recomienda el primero que lo tiene.
+    const plan = PLANS.find((p) => emp <= p.employees && clk <= p.clocks && sit <= p.sites && (!wantsOdoo || p.odoo));
+    const cta = $('r-cta');
+
+    if (!plan) {
+      setPlanName('A tu medida');
+      $('r-tag').hidden = true;
+      priceNow = null;
+      $('r-price').textContent = 'Cotización';
+      $('r-unit').textContent = '';
+      $('r-per').textContent = 'Para más de 300 personas, 30 relojes o 15 sedes armamos un precio por volumen.';
+      $('r-incl').innerHTML = '';
+      $('r-iva').textContent = 'Te respondemos el mismo día hábil.';
+      cta.href = contactUrl(`Hola, necesito una cotización de Trueque HR para ${emp} empleados, ${clk} relojes y ${sit} sedes.`);
+      return;
+    }
+    const yearTotal = plan.year;
+    const shown = billing === 'year' ? yearTotal : Math.round((yearTotal / 10) * 100) / 100;
+    const perMonth = yearTotal / 12;
+    setPlanName(plan.name);
+    $('r-tag').hidden = !plan.popular;
+    tweenPrice(shown);
+    $('r-unit').textContent = billing === 'year' ? 'al año' : 'al mes';
+    $('r-per').innerHTML = billing === 'year'
+      ? `Equivale a <strong>${usd(perMonth, 2)} al mes</strong>: ${usd(perMonth / emp, 2)} por persona.`
+      : `Pagando el año te ahorras ${usd2(Math.round((shown * 12 - yearTotal) * 100) / 100)}.`;
+    $('r-incl').innerHTML = [
+      `Hasta ${plan.employees} empleados`,
+      `${plan.clocks} ${plan.clocks === 1 ? 'reloj' : 'relojes'} y ${plan.sites} ${plan.sites === 1 ? 'sede' : 'sedes'}`,
+      plan.full ? 'Contratos, roles y conexión en vivo' : 'Asistencia, horas extra y vacaciones',
+      plan.full ? 'Empleados y contratos en Odoo' : plan.odoo ? 'Empleados en Odoo' : 'Soporte desde Ecuador',
+    ].map((t) => `<li>${CHECK}${t}</li>`).join('');
+    $('r-iva').textContent = `Más IVA 15 %: ${usd(shown * (1 + IVA), 2)} ${billing === 'year' ? 'al año' : 'al mes'} en total.`;
+    cta.href = contactUrl(`Hola, me interesa Trueque HR, plan ${plan.name} (${billing === 'year' ? 'anual' : 'mensual'}) para ${emp} empleados, ${clk} relojes y ${sit} ${sit === 1 ? 'sede' : 'sedes'}${wantsOdoo ? ', con Odoo' : ''}.`);
+    if (WHATSAPP) { cta.target = '_blank'; cta.rel = 'noopener'; }
+  }
+
+  // El precio corre hasta el nuevo valor (se puede interrumpir: siempre parte del número que se ve).
+  let priceNow = null;
+  let priceAnim = 0;
+  function tweenPrice(target) {
+    const el = $('r-price');
+    cancelAnimationFrame(priceAnim);
+    if (REDUCE || priceNow === null) {
+      priceNow = target;
+      el.textContent = usd2(target);
+      return;
+    }
+    const from = priceNow;
+    const start = performance.now();
+    const ms = 420;
+    const ease = (t) => 1 - Math.pow(1 - t, 4);
+    const step = (now) => {
+      const t = Math.min(1, (now - start) / ms);
+      priceNow = from + (target - from) * ease(t);
+      el.textContent = t < 1 ? usd(Math.round(priceNow)) : usd2(target);
+      if (t < 1) priceAnim = requestAnimationFrame(step);
+      else priceNow = target;
+    };
+    priceAnim = requestAnimationFrame(step);
+  }
+  // El nombre del plan entra desde abajo cuando cambia.
+  let planNow = '';
+  function setPlanName(name) {
+    if (name === planNow) return;
+    const el = $('r-plan');
+    el.textContent = name;
+    if (planNow && !REDUCE) {
+      el.getAnimations().forEach((a) => a.cancel());
+      el.animate([{ opacity: 0, transform: 'translateY(6px)' }, { opacity: 1, transform: 'none' }], { duration: 220, easing: 'cubic-bezier(0.23, 1, 0.32, 1)' });
+    }
+    planNow = name;
+  }
+
+  Object.values(inputs).forEach((i) => i.addEventListener('input', update));
+  $('odoo').addEventListener('change', update);
+  for (const b of document.querySelectorAll('[data-billing]')) {
+    b.addEventListener('click', () => {
+      billing = b.dataset.billing;
+      document.querySelectorAll('[data-billing]').forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
+      update();
+    });
+  }
+  update();
+
+  // Línea bajo el encabezado al bajar
+  const bar = document.getElementById('top');
+  let lastY = scrollY;
+  addEventListener('scroll', () => {
+    const y = scrollY;
+    bar.classList.toggle('scrolled', y > 8);
+    if (!REDUCE && Math.abs(y - lastY) > 6) {
+      bar.classList.toggle('away', y > lastY && y > 160 && !document.querySelector('dialog[open]'));
+      lastY = y;
+    }
+  }, { passive: true });
+
+  // Términos y condiciones en una ventana; el enlace /sitio/#terminos la abre directo.
+  const terms = document.getElementById('terminos');
+  const openTerms = (e) => {
+    e?.preventDefault();
+    if (!terms.open) terms.showModal();
+    if (location.hash !== '#terminos') history.replaceState(null, '', '#terminos');
+  };
+  document.querySelectorAll('[data-terms]').forEach((a) => a.addEventListener('click', openTerms));
+  terms.querySelector('[data-close]').addEventListener('click', () => terms.close());
+  terms.addEventListener('click', (e) => { if (e.target === terms) terms.close(); });
+  terms.addEventListener('close', () => { if (location.hash === '#terminos') history.replaceState(null, '', location.pathname + location.search); });
+  if (location.hash === '#terminos') openTerms();
+
+  // Aparecer al bajar: una sola vez, con un pequeño escalonado entre hermanos.
+  const groups = [
+    ['section.block .kicker, section.block h2.title, section.block p.intro', 1],
+    ['.three .card', 1], ['.feature .text', 0], ['.duo .panel', 1], ['.flow .step', 1], ['.note', 1],
+    ['.plans .plan', 1], ['.custom', 0], ['.all li', 0.35], ['.svc', 0], ['.faq details', 0.6],
+    ['footer .wrap > *', 1],
+  ];
+  const targets = [];
+  for (const [selector, stagger] of groups) {
+    const byParent = new Map();
+    for (const el of document.querySelectorAll(selector)) {
+      const key = el.closest('section, footer, .plans, .three, .flow, .faq, .duo, .all') ?? el.parentElement;
+      const i = byParent.get(key) ?? 0;
+      byParent.set(key, i + 1);
+      el.dataset.reveal = el.dataset.reveal || '';
+      el.style.setProperty('--i', String(Math.round(i * stagger * 10) / 10));
+      targets.push(el);
+    }
+  }
+  for (const el of document.querySelectorAll('.feature .shot')) { el.dataset.reveal = 'shot'; el.style.setProperty('--i', '1'); targets.push(el); }
+  const flow = document.querySelector('.flow');
+  flow.dataset.reveal = 'line';
+  targets.push(flow);
+  // Sin animación ligada al scroll, la captura principal se endereza al aparecer.
+  if (!CSS.supports('animation-timeline: view()')) {
+    const hero = document.querySelector('.showcase .shot');
+    hero.dataset.reveal = 'tilt';
+    targets.push(hero);
+  }
+  if ('IntersectionObserver' in window) {
+    const io = new IntersectionObserver((entries) => {
+      for (const e of entries) if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+    }, { rootMargin: '0px 0px -8% 0px', threshold: 0.12 });
+    targets.forEach((el) => io.observe(el));
+  } else {
+    targets.forEach((el) => el.classList.add('in'));
+  }
+</script>
+</body>
+</html>
