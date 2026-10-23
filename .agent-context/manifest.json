@@ -1,0 +1,25 @@
+{
+  "schema_version": "1",
+  "analyzed_commit": "b7f84a0bc302cf5b5aae35a850afa90215e00630",
+  "analyzed_at": "2026-07-22T00:03:30Z",
+  "project_name": "trueque-meta-site",
+  "framework": "Angular 19.2",
+  "files": [
+    ".github/copilot-instructions.md",
+    ".github/agents/implementer.agent.md",
+    ".github/agents/reviewer.agent.md",
+    ".github/agents/repository-maintainer.agent.md",
+    ".github/prompts/complete-issue.prompt.md",
+    ".github/prompts/review-pr.prompt.md",
+    "AGENTS.md",
+    "docs/architecture.md",
+    "docs/repository-map.md",
+    "docs/development.md",
+    "docs/testing.md",
+    "docs/domain.md",
+    "docs/known-patterns.md",
+    "docs/known-pitfalls.md",
+    "docs/decisions/README.md",
+    ".agent-context/manifest.json"
+  ]
+}
